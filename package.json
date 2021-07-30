@@ -48,7 +48,6 @@
     "react-test-renderer": "17.0.2",
     "redux-injectors": "1.3.0",
     "redux-saga": "1.1.3",
-    "replace-in-file": "6.2.0",
     "rimraf": "3.0.2",
     "sanitize.css": "12.0.1",
     "serve": "12.0.0",
@@ -75,12 +74,9 @@
     "lint:fix": "yarn run eslint --fix src",
     "lint:css": "stylelint src/**/*.css",
     "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
-    "cleanAndSetup": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/scripts/clean.ts",
     "prettify": "prettier --write",
-    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
