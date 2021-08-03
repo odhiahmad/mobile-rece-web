@@ -4,9 +4,9 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-const PageLogin = lazyLoad(
+const FormLogin = lazyLoad(
   () => import('./index'),
-  module => module.PageLogin,
+  module => module.FormLogin,
 );
 
-export default PageLogin;
+export default FormLogin;

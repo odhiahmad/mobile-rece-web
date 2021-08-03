@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import welcomeImg from 'assets/img/login/welcome.png';
 import PageLoginStyles from './styles';
 import { H1Main } from 'styles/texts';
+import FormLogin from 'app/components/organisms/form-login/loadable';
 
-export function LoginPage() {
+export function PageLogin() {
   return (
     <>
       <Helmet>
@@ -16,13 +17,19 @@ export function LoginPage() {
           <div className="flex-center pb-1">
             <img src={welcomeImg} alt="Welcome" />
           </div>
-          <H1Main>
-            Hi! <br />
-            Selamat Datang
-          </H1Main>
+          <div className="mb-2">
+            <H1Main>
+              Hi! <br />
+              Selamat Datang
+            </H1Main>
+            <span>
+              Masuk menggunakan username dan password kamu untuk mulai
+              menggunakan RECE
+            </span>
+          </div>
+          <FormLogin />
           <span>
-            Masuk menggunakan username dan password kamu untuk mulai menggunakan
-            RECE
+            Belum punya akun RECE? <a href="/">Daftar</a>
           </span>
         </div>
       </PageLoginStyles>

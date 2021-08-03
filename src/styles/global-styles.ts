@@ -27,13 +27,18 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   input, select {
-    font-family: inherit;
-    font-size: inherit;
+    font-family: 'Open Sans', sans-serif;
   }
 
   .main-screen {
     margin: 0 auto;
     max-width: 600px;
+  }
+
+  a {
+    color: ${colors.main};
+    text-decoration: none;
+    font-weight: 700;
   }
 
   /* h1 {

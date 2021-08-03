@@ -23,6 +23,16 @@ const PaddingStyles = createGlobalStyle`
   .pb-3 {
     padding-bottom: 3rem;
   }
+
+  .mb-1 {
+    margin-bottom: 1rem;
+  }
+  .mb-2 {
+    margin-bottom: 2rem;
+  }
+  .mb-3 {
+    margin-bottom: 3rem;
+  }
 `;
 
 export default PaddingStyles;
