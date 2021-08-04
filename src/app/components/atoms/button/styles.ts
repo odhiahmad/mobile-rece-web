@@ -34,6 +34,14 @@ const ButtonStyles = styled.button<PropTypes>`
   border-radius: 0.7rem;
   font-size: 1rem;
   outline: none;
+  box-shadow: 0px 5px 10px rgba(darken(dodgerblue, 40%));
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 5px;
+  &:active {
+    box-shadow: 0px 4px 8px rgba(darken(dodgerblue, 30%));
+    transform: scale(0.98);
+  }
   ${props => props.fullWidth && 'width: 100%;'}
   ${props => colorScheme(props.buttonType)}
 `;
