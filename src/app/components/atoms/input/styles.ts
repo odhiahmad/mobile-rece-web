@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { flash } from 'react-animations';
+
 import { colors } from 'styles/variables';
 import { PropTypes as InputPropTypes } from './index';
 
@@ -7,6 +9,8 @@ interface PropTypes {
   hasLogo: boolean;
   type: InputPropTypes['type'];
 }
+
+const flashAnimation = keyframes`${flash}`;
 
 const padding = (
   hasLogo: PropTypes['hasLogo'],
@@ -25,7 +29,7 @@ const padding = (
 
 const InputStyles = styled.div<PropTypes>`
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
   input {
     width: 100%;
     border-width: 1px;
@@ -34,9 +38,9 @@ const InputStyles = styled.div<PropTypes>`
     outline: none;
     height: 3.5rem;
     box-sizing: border-box;
-    color: transparent;
-    text-shadow: 0 0 0 ${colors.black50};
-    /* color: ${colors.black50}; */
+    /* color: transparent; */
+    /* text-shadow: 0 0 0 ${colors.black50}; */
+    color: ${colors.black50};
     padding: ${props => padding(props.hasLogo, props.type)};
     border-style: ${props =>
       props.bgColorScheme === 'normal' ? 'solid' : 'hidden'};
@@ -57,6 +61,16 @@ const InputStyles = styled.div<PropTypes>`
     position: absolute;
     right: 1rem;
     top: 1rem;
+  }
+  .input_error-msg {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: red;
+    position: absolute;
+    left: 1rem;
+    bottom: -1.2rem;
+    animation: 1s ${flashAnimation};
+    width: calc(100% - 1rem);
   }
 `;
 

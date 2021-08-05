@@ -14,6 +14,11 @@ const TextStyles = createGlobalStyle`
   .pre-line {
     white-space: pre-wrap;
   }
+  .ellipsis-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export default TextStyles;
