@@ -4,8 +4,10 @@ import welcomeImg from 'assets/img/login/welcome.png';
 import PageLoginStyles from './styles';
 import { H1Main } from 'styles/texts';
 import FormLogin from 'app/components/organisms/form-login/loadable';
+import useRouter from 'app/components/hooks/router';
 
 export function PageLogin() {
+  const router = useRouter();
   return (
     <>
       <Helmet>
@@ -13,7 +15,7 @@ export function PageLogin() {
         <meta name="description" content="Login page for RECE App" />
       </Helmet>
       <PageLoginStyles>
-        <div className="pl-24 pr-24 pt-24 pb-24">
+        <div className="pl-2 pr-2 pt-2 pb-2">
           <div className="flex-center pb-1">
             <img src={welcomeImg} alt="Welcome" />
           </div>
@@ -29,7 +31,7 @@ export function PageLogin() {
           </div>
           <FormLogin />
           <span>
-            Belum punya akun RECE? <a href="/">Daftar</a>
+            Belum punya akun RECE? <a href={router.route.register}>Daftar</a>
           </span>
         </div>
       </PageLoginStyles>

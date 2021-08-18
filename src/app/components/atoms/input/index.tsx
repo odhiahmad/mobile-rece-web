@@ -8,7 +8,7 @@ export interface PropTypes {
   labrl?: string;
   logo?: string | null;
   colorScheme?: 'normal' | 'grey';
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | 'number';
   placeholder?: string;
   error?: boolean;
   errorMsg?: string;

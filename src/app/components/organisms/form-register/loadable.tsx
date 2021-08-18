@@ -4,7 +4,9 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const HomePage = lazyLoad(
+const FormRegister = lazyLoad(
   () => import('./index'),
-  module => module.HomePage,
+  module => module.FormRegister,
 );
+
+export default FormRegister;

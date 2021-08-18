@@ -18,7 +18,7 @@ const padding = (
 ): string => {
   if (hasLogo && type === 'password') {
     return '0rem 3.5rem 0rem 4.5rem';
-  } else if (hasLogo && type === 'text') {
+  } else if (hasLogo && (type === 'text' || type === 'number')) {
     return '0rem 1rem 0rem 4.5rem';
   }
   if (type === 'password') {

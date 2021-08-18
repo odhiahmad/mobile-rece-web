@@ -41,6 +41,10 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 700;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   /* h1 {
     font-size: 2.2857142857142856rem;
     font-weight: 600;

@@ -1,4 +1,5 @@
 import PageLogin from 'app/components/pages/login/loadable';
+import PageRegistration from 'app/components/pages/registration/loadable';
 
 const routes = [
   {
@@ -6,6 +7,12 @@ const routes = [
     name: 'page-login',
     component: PageLogin,
     path: '/',
+  },
+  {
+    key: 'page-register',
+    name: 'page-register',
+    component: PageRegistration,
+    path: '/register',
   },
 ];
 

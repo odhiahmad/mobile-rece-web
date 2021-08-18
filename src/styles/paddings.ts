@@ -14,6 +14,17 @@ const PaddingStyles = createGlobalStyle`
   .pb-24 {
     padding-bottom: ${sizes.bodyPadding};
   }
+
+  .pt-1 {
+    padding-top: 1rem;
+  }
+  .pt-2 {
+    padding-top: 2rem;
+  }
+  .pt-3 {
+    padding-top: 3rem;
+  }
+
   .pb-1 {
     padding-bottom: 1rem;
   }
@@ -22,6 +33,26 @@ const PaddingStyles = createGlobalStyle`
   }
   .pb-3 {
     padding-bottom: 3rem;
+  }
+
+  .pl-1 {
+    padding-left: 1rem;
+  }
+  .pl-2 {
+    padding-left: 2rem;
+  }
+  .pl-3 {
+    padding-left: 3rem;
+  }
+
+  .pr-1 {
+    padding-right: 1rem;
+  }
+  .pr-2 {
+    padding-right: 2rem;
+  }
+  .pr-3 {
+    padding-right: 3rem;
   }
 
   .mb-1 {
