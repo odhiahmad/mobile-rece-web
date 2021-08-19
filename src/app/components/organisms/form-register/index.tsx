@@ -4,10 +4,13 @@ import * as Yup from 'yup';
 
 import Input from 'app/components/atoms/input/loadable';
 import Button from 'app/components/atoms/button/loadable';
+import DatePicker from 'app/components/atoms/datepicker/loadable';
 import userLogo from 'assets/img/login/user.png';
 import lockLogo from 'assets/img/login/lock.png';
 import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
+import calendarLogo from 'assets/img/calendar.png';
+import dayjs from 'dayjs';
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
@@ -18,6 +21,7 @@ const loginSchema = Yup.object().shape({
     .typeError('Nomor handphone tidak boleh kosong')
     .required('Nomor handphone tidak boleh kosong'),
   mother: Yup.string().required('Nama ibu kandung tidak boleh kosong'),
+  birthdate: Yup.string().required('Tanggal lahir tidak boleh kosong'),
   password: Yup.string().required('Password tidak boleh kosong'),
   confirmPassword: Yup.string().required(
     'Konfirmasi password tidak boleh kosong',
@@ -28,9 +32,10 @@ export function FormRegister() {
   const formik = useFormik({
     initialValues: {
       name: '',
-      ktp: null,
-      phone: null,
+      ktp: undefined,
+      phone: undefined,
       mother: '',
+      birthdate: dayjs().format('DD-MM-YYYY'),
       password: '',
       confirmPassword: '',
     },
@@ -48,6 +53,7 @@ export function FormRegister() {
           logo={userLogo}
           colorScheme="grey"
           placeholder="Nama Sesuai KTP"
+          value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.errors.name !== undefined && formik.touched.name}
@@ -60,6 +66,7 @@ export function FormRegister() {
           logo={ktpLogo}
           colorScheme="grey"
           placeholder="Nomor KTP"
+          value={formik.values.ktp}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.errors.ktp !== undefined && formik.touched.ktp}
@@ -72,10 +79,29 @@ export function FormRegister() {
           logo={phoneLogo}
           colorScheme="grey"
           placeholder="Nomor HP"
+          value={formik.values.phone}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.errors.phone !== undefined && formik.touched.phone}
           errorMsg={formik.errors.phone}
+        />
+        <DatePicker
+          id="birth-date"
+          name="birthdate"
+          dateType="date"
+          format="DD-MM-YYYY"
+          logo={calendarLogo}
+          colorScheme="grey"
+          placeholder="Tanggal Lahir"
+          value={dayjs(formik.values.birthdate, 'DD-MM-YYYY').toDate()}
+          onChange={(event, date) => {
+            formik.setFieldValue('birthdate', date);
+          }}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.birthdate !== undefined && formik.touched.birthdate
+          }
+          errorMsg={formik.errors.birthdate}
         />
         <Input
           id="mother-input"
@@ -83,6 +109,7 @@ export function FormRegister() {
           logo={userLogo}
           colorScheme="grey"
           placeholder="Nama Ibu Kandung"
+          value={formik.values.mother}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.errors.mother !== undefined && formik.touched.mother}
@@ -95,6 +122,7 @@ export function FormRegister() {
           type="password"
           colorScheme="grey"
           placeholder="Password"
+          value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -109,6 +137,7 @@ export function FormRegister() {
           type="password"
           colorScheme="grey"
           placeholder="Confirm Password"
+          value={formik.values.confirmPassword}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -118,7 +147,7 @@ export function FormRegister() {
           errorMsg={formik.errors.confirmPassword}
         />
       </div>
-      <Button id="login-submit" type="submit" fullWidth className="mb-1">
+      <Button id="register-submit" type="submit" fullWidth className="mb-1">
         MASUK
       </Button>
     </form>

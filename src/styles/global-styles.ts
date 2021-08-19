@@ -45,6 +45,18 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  .MuiToolbar-root, .MuiPickersDay-current, .MuiPickersDay-daySelected {
+    background-color: ${colors.main} !important;
+  }
+
+  .MuiPickersDay-current {
+    color: ${colors.black50} !important;
+  }
+
+  .MuiButton-textPrimary {
+    color: ${colors.main} !important;
+  }
+
   /* h1 {
     font-size: 2.2857142857142856rem;
     font-weight: 600;

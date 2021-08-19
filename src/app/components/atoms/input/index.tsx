@@ -5,7 +5,8 @@ import eyeLogo from 'assets/img/login/eye.png';
 export interface PropTypes {
   id: string;
   name: string;
-  labrl?: string;
+  value?: string | number | undefined;
+  label?: string;
   logo?: string | null;
   colorScheme?: 'normal' | 'grey';
   type?: 'text' | 'password' | 'number';
@@ -14,6 +15,7 @@ export interface PropTypes {
   errorMsg?: string;
   onChange?: (event?: any, value?: string | number) => any;
   onBlur?: (event?: any) => any;
+  onClick?: () => void;
 }
 
 export function Input({
@@ -25,10 +27,13 @@ export function Input({
   name = '',
   onChange = () => {},
   onBlur = () => {},
+  onClick = () => {},
   error = false,
   errorMsg = '',
+  value = undefined,
 }: PropTypes) {
   const [showPass, setShowPass] = React.useState(false);
+  const valueProps = value !== undefined ? { value } : {};
   return (
     <>
       <InputStyles
@@ -48,9 +53,11 @@ export function Input({
             e.persist();
             onChange(e, e.target.value);
           }}
+          onClick={onClick}
           onKeyUp={onBlur}
           type={type === 'password' && showPass ? 'text' : type}
           placeholder={placeholder}
+          {...valueProps}
         />
         {type === 'password' && (
           <button type="button" onClick={() => setShowPass(!showPass)}>

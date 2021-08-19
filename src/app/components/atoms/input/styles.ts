@@ -53,6 +53,7 @@ const InputStyles = styled.div<PropTypes>`
     top: 1rem;
     padding-right: 1rem;
     border-right: 1px solid ${colors.black30};
+    width: 2.5rem;
   }
   button {
     background-color: transparent;

@@ -18,6 +18,10 @@ import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import mySaga from 'store/sagas';
 import { useInjectSaga } from 'utils/redux-injectors';
 import publics from 'app/routes/public';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
+
+dayjs.extend(customParseFormat);
 
 export function App() {
   // const { i18n } = useTranslation();
