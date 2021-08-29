@@ -9,7 +9,7 @@ export interface PropTypes {
   id: string;
   label?: string;
   format?: string;
-  value?: Date;
+  value?: string;
   minDate?: any;
   maxDate?: any;
   isMinDate?: boolean;
@@ -32,7 +32,7 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
   id = '',
   label = '',
   format = 'DD-MM-YYYY',
-  value = new Date(),
+  value = '',
   minDate = undefined,
   maxDate = undefined,
   disabled = false,
@@ -49,9 +49,11 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
 }: PropTypes) => {
   // STATE
   const [open, setOpen] = React.useState(false);
+  const [hasBeen, setBeen] = React.useState(false);
   // [NOTE] complete documentation: https://material-ui-pickers.dev/api/DatePicker
   // OTHER
   const beforeOnChange = date => {
+    setBeen(true);
     setOpen(false);
     onChange(date, date.format(format));
   };
@@ -60,7 +62,7 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
       <DatePicker
         id={id}
         label={label}
-        value={value}
+        value={dayjs(value, format).toDate()}
         onChange={beforeOnChange}
         minDate={minDate}
         maxDate={maxDate}
@@ -72,7 +74,7 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
           <Input
             id={id}
             name={name}
-            value={dayjs(value).format(format)}
+            value={hasBeen ? dayjs(value, format).format(format) : ''}
             type="text"
             logo={logo}
             placeholder={placeholder}

@@ -35,7 +35,7 @@ export function FormRegister() {
       ktp: undefined,
       phone: undefined,
       mother: '',
-      birthdate: dayjs().format('DD-MM-YYYY'),
+      birthdate: '',
       password: '',
       confirmPassword: '',
     },
@@ -93,7 +93,7 @@ export function FormRegister() {
           logo={calendarLogo}
           colorScheme="grey"
           placeholder="Tanggal Lahir"
-          value={dayjs(formik.values.birthdate, 'DD-MM-YYYY').toDate()}
+          value={formik.values.birthdate}
           onChange={(event, date) => {
             formik.setFieldValue('birthdate', date);
           }}
