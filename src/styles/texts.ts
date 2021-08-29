@@ -14,10 +14,15 @@ const TextStyles = createGlobalStyle`
   .pre-line {
     white-space: pre-wrap;
   }
+
   .ellipsis-text {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+  
+  .text-sub-title {
+    font-size: 1.29rem;
   }
 `;
 

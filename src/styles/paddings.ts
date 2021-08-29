@@ -18,8 +18,14 @@ const PaddingStyles = createGlobalStyle`
   .pt-1 {
     padding-top: 1rem;
   }
+  .pt-1-half {
+    padding-top: 1.5rem;
+  }
   .pt-2 {
     padding-top: 2rem;
+  }
+  .pt-2-half {
+    padding-top: 2.5rem;
   }
   .pt-3 {
     padding-top: 3rem;
@@ -28,8 +34,14 @@ const PaddingStyles = createGlobalStyle`
   .pb-1 {
     padding-bottom: 1rem;
   }
+  .pb-1-half {
+    padding-bottom: 1.5rem;
+  }
   .pb-2 {
     padding-bottom: 2rem;
+  }
+  .pb-2-half {
+    padding-bottom: 2.5rem;
   }
   .pb-3 {
     padding-bottom: 3rem;
@@ -38,8 +50,14 @@ const PaddingStyles = createGlobalStyle`
   .pl-1 {
     padding-left: 1rem;
   }
+  .pl-1-half {
+    padding-left: 1.5rem;
+  }
   .pl-2 {
     padding-left: 2rem;
+  }
+  .pl-2-half {
+    padding-left: 2.5rem;
   }
   .pl-3 {
     padding-left: 3rem;
@@ -48,8 +66,14 @@ const PaddingStyles = createGlobalStyle`
   .pr-1 {
     padding-right: 1rem;
   }
+  .pr-1-half {
+    padding-right: 1.5rem;
+  }
   .pr-2 {
     padding-right: 2rem;
+  }
+  .pr-2-half {
+    padding-right: 2.5rem;
   }
   .pr-3 {
     padding-right: 3rem;
@@ -57,6 +81,9 @@ const PaddingStyles = createGlobalStyle`
 
   .mb-1 {
     margin-bottom: 1rem;
+  }
+  .mb-1-half {
+    margin-bottom: 1.5rem;
   }
   .mb-2 {
     margin-bottom: 2rem;
