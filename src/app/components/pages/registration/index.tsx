@@ -19,27 +19,6 @@ export function PageRegistration() {
         </div>
         <FormRegister />
       </div>
-      {/* <PageLoginStyles>
-        <div className="pl-24 pr-24 pt-24 pb-24">
-          <div className="flex-center pb-1">
-            <img src={welcomeImg} alt="Welcome" />
-          </div>
-          <div className="mb-2">
-            <H1Main>
-              Hi! <br />
-              Selamat Datang
-            </H1Main>
-            <span>
-              Masuk menggunakan username dan password kamu untuk mulai
-              menggunakan RECE
-            </span>
-          </div>
-          <FormLogin />
-          <span>
-            Belum punya akun RECE? <a href="/">Daftar</a>
-          </span>
-        </div>
-      </PageLoginStyles> */}
     </>
   );
 }

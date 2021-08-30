@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Open Sans', sans-serif;
     color: ${colors.black50};
+    background-color: ${colors.white100};
   }
 
   #root {
@@ -32,7 +33,17 @@ export const GlobalStyle = createGlobalStyle`
 
   .main-screen {
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 500px;
+  }
+
+  .screen {
+    padding-bottom: 2rem;
+  }
+
+  @media screen and (min-width: 500px) {
+    .screen {
+      padding-top: 2rem;
+    }
   }
 
   a {

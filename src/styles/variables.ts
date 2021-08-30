@@ -3,6 +3,7 @@ export const colors = {
   // BLACK
   black50: '#606060',
   black30: '#D0D0D0',
+  black20: '#F4F7F9',
   black10: '#F9F9F9',
   // WHITE
   white100: '#FFFFFF',

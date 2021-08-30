@@ -31,6 +31,9 @@ const PaddingStyles = createGlobalStyle`
     padding-top: 3rem;
   }
 
+  .pb-half {
+    padding-bottom: 0.5rem;
+  }
   .pb-1 {
     padding-bottom: 1rem;
   }
@@ -79,6 +82,9 @@ const PaddingStyles = createGlobalStyle`
     padding-right: 3rem;
   }
 
+  .mb-half {
+    margin-bottom: 0.5rem;
+  }
   .mb-1 {
     margin-bottom: 1rem;
   }
@@ -88,8 +94,24 @@ const PaddingStyles = createGlobalStyle`
   .mb-2 {
     margin-bottom: 2rem;
   }
+  .mb-2-half {
+    margin-bottom: 2.5rem;
+  }
   .mb-3 {
     margin-bottom: 3rem;
+  }
+
+  /* OTHER */
+  .border-radius-main {
+    border-radius: 10px;
+  }
+
+  .border-radius-big {
+    border-radius: 20px;
+  }
+
+  .main-border-bottom {
+    border-bottom: 1px solid #7b7f9e30;
   }
 `;
 

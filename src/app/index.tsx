@@ -18,6 +18,7 @@ import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import mySaga from 'store/sagas';
 import { useInjectSaga } from 'utils/redux-injectors';
 import publics from 'app/routes/public';
+import privates from 'app/routes/private';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 
@@ -35,6 +36,9 @@ export function App() {
       <div className="main-screen">
         <Switch>
           {publics.map(({ key, path, component }) => (
+            <Route key={key} path={path} component={component} exact />
+          ))}
+          {privates.map(({ key, path, component }) => (
             <Route key={key} path={path} component={component} exact />
           ))}
           <Route component={NotFoundPage} />
