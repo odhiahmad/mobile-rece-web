@@ -30,7 +30,8 @@ const padding = (
 const InputStyles = styled.div<PropTypes>`
   position: relative;
   margin-bottom: 1.7rem;
-  input {
+  input,
+  .input-number {
     width: 100%;
     border-width: 1px;
     border-radius: 0.5rem;
