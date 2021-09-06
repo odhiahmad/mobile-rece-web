@@ -10,6 +10,7 @@ export interface PropTypes {
   logo?: string | null;
   colorScheme?: 'normal' | 'grey';
   type?: 'text' | 'password' | 'number';
+  isSelect?: boolean;
   placeholder?: string;
   error?: boolean;
   errorMsg?: string;
@@ -31,6 +32,7 @@ export function Input({
   error = false,
   errorMsg = '',
   value = undefined,
+  label = '',
 }: PropTypes) {
   const [showPass, setShowPass] = React.useState(false);
   const valueProps = value !== undefined ? { value } : {};
@@ -56,7 +58,7 @@ export function Input({
           onClick={onClick}
           onKeyUp={onBlur}
           type={type === 'password' && showPass ? 'text' : type}
-          placeholder={placeholder}
+          placeholder={colorScheme === 'grey' ? placeholder : ' '}
           {...valueProps}
         />
         {type === 'password' && (
@@ -64,6 +66,7 @@ export function Input({
             <img src={eyeLogo} alt="Show Password Logo" />
           </button>
         )}
+        <div className="input_label-normal">{label}</div>
         {error && (
           <span className="input_error-msg ellipsis-text">{errorMsg}</span>
         )}

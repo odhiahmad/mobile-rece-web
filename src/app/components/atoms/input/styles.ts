@@ -33,7 +33,7 @@ const InputStyles = styled.div<PropTypes>`
   input {
     width: 100%;
     border-width: 1px;
-    border-radius: 0.7rem;
+    border-radius: 0.5rem;
     font-size: 1rem;
     outline: none;
     height: 3.5rem;
@@ -46,6 +46,19 @@ const InputStyles = styled.div<PropTypes>`
       props.bgColorScheme === 'normal' ? 'solid' : 'hidden'};
     background-color: ${props =>
       props.bgColorScheme === 'normal' ? colors.white100 : colors.black10};
+    border-color: ${props =>
+      props.bgColorScheme === 'normal' ? colors.main : 'none'};
+
+    &:focus + .input_label-normal {
+      transform: translateY(-25px) translateX(-9px) scale(0.85);
+      padding: 0px 5px;
+      color: ${colors.main};
+    }
+    &:not(:placeholder-shown) + .input_label-normal {
+      transform: translateY(-25px) translateX(-9px) scale(0.85);
+      padding: 0px 5px;
+      color: ${colors.main};
+    }
   }
   .input_logo {
     position: absolute;
@@ -72,6 +85,14 @@ const InputStyles = styled.div<PropTypes>`
     bottom: -1.2rem;
     animation: 1s ${flashAnimation};
     width: calc(100% - 1rem);
+  }
+  .input_label-normal {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    background-color: white;
+    transition: 0.1s ease-out;
+    color: #dadada;
   }
 `;
 

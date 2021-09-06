@@ -17,3 +17,7 @@ export const sizes = {
   // PADDING
   bodyPadding: `${24 / main}rem`,
 };
+
+export const zIndexs = {
+  topbar: 50,
+};
