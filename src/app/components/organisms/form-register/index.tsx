@@ -10,7 +10,7 @@ import lockLogo from 'assets/img/login/lock.png';
 import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
 import calendarLogo from 'assets/img/calendar.png';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
