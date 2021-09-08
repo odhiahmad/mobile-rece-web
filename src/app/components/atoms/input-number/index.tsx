@@ -20,7 +20,7 @@ interface PropTypes {
 export function InputNumber({
   id = '',
   name = '',
-  value: inValue = '',
+  value: inValue = undefined,
   label = '',
   placeholder = '',
   onChange = () => {},

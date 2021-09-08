@@ -5,6 +5,10 @@ const AllignmentStyles = createGlobalStyle`
     width: 100%;
   }
 
+  .h-100 {
+    height: 100%;
+  }
+
   .flex {
     display: flex;
   }
@@ -38,6 +42,10 @@ const AllignmentStyles = createGlobalStyle`
 
   .relative {
     position: relative;
+  }
+
+  .overflow-y-scroll {
+    overflow-y: scroll;
   }
 `;
 

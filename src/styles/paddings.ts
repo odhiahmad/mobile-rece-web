@@ -15,6 +15,9 @@ const PaddingStyles = createGlobalStyle`
     padding-bottom: ${sizes.bodyPadding};
   }
 
+  .pt-half {
+    padding-top: 0.5rem;
+  }
   .pt-1 {
     padding-top: 1rem;
   }
@@ -99,6 +102,25 @@ const PaddingStyles = createGlobalStyle`
   }
   .mb-3 {
     margin-bottom: 3rem;
+  }
+
+  .mr-half {
+    margin-right: 0.5rem;
+  }
+  .mr-1 {
+    margin-right: 1rem;
+  }
+  .mr-1-half {
+    margin-right: 1.5rem;
+  }
+  .mr-2 {
+    margin-right: 2rem;
+  }
+  .mr-2-half {
+    margin-right: 2.5rem;
+  }
+  .mr-3 {
+    margin-right: 3rem;
   }
 
   /* OTHER */

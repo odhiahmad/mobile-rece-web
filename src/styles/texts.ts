@@ -28,6 +28,10 @@ const TextStyles = createGlobalStyle`
     font-size: 1.43rem;
   }
 
+  .text-jumbotron {
+    font-size: 2.57rem;
+  }
+
   .text-center {
     text-align: center;
   }

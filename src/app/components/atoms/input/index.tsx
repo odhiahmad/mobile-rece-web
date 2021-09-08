@@ -29,7 +29,7 @@ export function Input({
   id = '',
   name = '',
   className = '',
-  // isSelect = false,
+  isSelect = false,
   isInputNumber = false,
   onChange = () => {},
   onBlur = () => {},
@@ -42,7 +42,11 @@ export function Input({
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const [showPass, setShowPass] = React.useState(false);
   const onBeforeClick = () => {
-    inputRef.current.focus();
+    if (!isSelect) {
+      inputRef.current.focus();
+    } else {
+      inputRef.current.blur();
+    }
     onClick();
   };
   const valueProps = value !== undefined ? { value } : {};
