@@ -1,5 +1,6 @@
 import PageHome from 'app/components/pages/home/loadable';
 import PageSaving from 'app/components/pages/saving/loadable';
+import PageWithdraw from 'app/components/pages/withdraw/loadable';
 
 const routes = [
   {
@@ -13,6 +14,12 @@ const routes = [
     name: 'page-saving',
     component: PageSaving,
     path: '/saving',
+  },
+  {
+    key: 'page-withdraw',
+    name: 'page-withdraw',
+    component: PageWithdraw,
+    path: '/withdraw',
   },
 ];
 

@@ -1,6 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
 const AllignmentStyles = createGlobalStyle`
+  .w-46 {
+    width: 46%;
+  }
+
+  .w-50 {
+    width: 50%;
+  }
+
   .w-100 {
     width: 100%;
   }
@@ -40,12 +48,20 @@ const AllignmentStyles = createGlobalStyle`
     justify-content: center;
   }
 
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
   .relative {
     position: relative;
   }
 
   .overflow-y-scroll {
     overflow-y: scroll;
+  }
+
+  .border-box {
+    box-sizing: border-box;
   }
 `;
 

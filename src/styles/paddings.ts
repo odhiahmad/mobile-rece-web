@@ -85,6 +85,25 @@ const PaddingStyles = createGlobalStyle`
     padding-right: 3rem;
   }
 
+  .mt-half {
+    margin-top: 0.5rem;
+  }
+  .mt-1 {
+    margin-top: 1rem;
+  }
+  .mt-1-half {
+    margin-top: 1.5rem;
+  }
+  .mt-2 {
+    margin-top: 2rem;
+  }
+  .mt-2-half {
+    margin-top: 2.5rem;
+  }
+  .mt-3 {
+    margin-top: 3rem;
+  }
+
   .mb-half {
     margin-bottom: 0.5rem;
   }
