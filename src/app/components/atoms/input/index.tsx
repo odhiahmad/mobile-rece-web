@@ -1,6 +1,7 @@
 import * as React from 'react';
 import InputStyles from './styles';
-import eyeLogo from 'assets/img/login/eye.png';
+import EyeLogo from 'assets/img/login/eye.png';
+import DownChevron from 'assets/img/down-chevron.png';
 
 export interface PropTypes {
   id: string;
@@ -82,7 +83,12 @@ export function Input({
         {isInputNumber && <div className="input-number">{value}</div>}
         {type === 'password' && (
           <button type="button" onClick={() => setShowPass(!showPass)}>
-            <img src={eyeLogo} alt="Show Password Logo" />
+            <img src={EyeLogo} alt="Show Password Logo" />
+          </button>
+        )}
+        {isSelect && (
+          <button type="button">
+            <img src={DownChevron} alt="Down Chevron" />
           </button>
         )}
         {colorScheme === 'normal' && (

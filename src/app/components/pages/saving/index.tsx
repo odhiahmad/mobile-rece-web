@@ -14,8 +14,8 @@ export function PageSaving() {
   return (
     <>
       <Helmet>
-        <title>Halaman Menabung</title>
-        <meta name="description" content="Halaman nabung for RECE App" />
+        <title>Menabung RECE</title>
+        <meta name="description" content="Halaman nabung RECE" />
       </Helmet>
       <TopBar />
       <PageSavingStyles>
