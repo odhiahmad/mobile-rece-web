@@ -56,7 +56,7 @@ export function PageWithdraw() {
       <TopBar />
       <Styles>
         <div className="withdraw screen">
-          <div className="saving_input-card flex-column mb-1">
+          <div className="withdraw_input-card flex-column mb-1">
             <div className="bg-color-white100 flex-column pt-2 pl-1-half pr-1-half">
               <span className="text-sub-title text-heavy mb-half">
                 Tarik RECE
@@ -103,7 +103,19 @@ export function PageWithdraw() {
               </div>
             </div>
           </div>
-          <div className="saving_transaction-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+          <div className="withdraw_success-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+            <div className="flex flex-h-center mb-2-half">
+              <img src={SuccessLogo} alt="Success Logo" />
+            </div>
+            <div className="text-center flex-column">
+              <span className="text-sub-title mb-1">Kode Transaksi:</span>
+              <span className="text-jumbotron text-heavy mb-1">300897</span>
+              <span className="color-main text-info text-heavy pointer">
+                Salin Kode
+              </span>
+            </div>
+          </div>
+          <div className="withdraw_transaction-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
             <div className="mb-1-half">
               <span className="text-sub-title text-heavy mb-half">
                 Detail Transaksi
@@ -124,7 +136,7 @@ export function PageWithdraw() {
               <span>Rp50.000</span>
             </div>
           </div>
-          <div className="saving_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+          <div className="withdraw_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
             <div className="checkbox mr-1">
               <label>
                 <input type="checkbox" />
@@ -141,7 +153,7 @@ export function PageWithdraw() {
               yang berlaku
             </span>
           </div>
-          <div className="saving_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+          <div className="withdraw_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
             <Button id="confirm-saving-button" className="w-100" type="button">
               Konfirmasi
             </Button>
