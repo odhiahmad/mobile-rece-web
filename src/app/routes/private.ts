@@ -4,6 +4,7 @@ import PageWithdraw from 'app/components/pages/withdraw/loadable';
 import PageProfile from 'app/components/pages/profile/loadable';
 import PageTransfer from 'app/components/pages/transfer/loadable';
 import PageInvest from 'app/components/pages/invest/loadable';
+import PageBill from 'app/components/pages/bill/loadable';
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
     name: 'page-invest',
     component: PageInvest,
     path: '/invest',
+  },
+  {
+    key: 'page-bill-payment',
+    name: 'page-bill-payment',
+    component: PageBill,
+    path: '/bill-payment',
   },
 ];
 
