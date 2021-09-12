@@ -7,6 +7,7 @@ interface PropTypes {
   name: string;
   value?: string | number | undefined | null;
   label?: string;
+  masking?: 'rupiah' | 'none';
   // logo?: string | null;
   colorScheme?: 'normal' | 'grey';
   placeholder?: string;
@@ -22,6 +23,7 @@ export function InputNumber({
   name = '',
   value: inValue = undefined,
   label = '',
+  masking = 'rupiah',
   placeholder = '',
   onChange = () => {},
   onBlur = () => {},
@@ -34,8 +36,17 @@ export function InputNumber({
     setValue(valNumber);
     onChange(event, valNumber);
   };
+  const renderValue = React.useCallback(
+    val => {
+      if (masking === 'none') {
+        return val;
+      }
+      return rpMasking(val);
+    },
+    [masking],
+  );
   const valueProps =
-    value !== null ? { value: value === '' ? '' : rpMasking(value) } : {};
+    value !== null ? { value: value === '' ? '' : renderValue(value) } : {};
   return (
     <>
       <Input
