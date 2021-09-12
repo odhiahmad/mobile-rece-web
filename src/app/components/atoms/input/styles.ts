@@ -51,12 +51,12 @@ const InputStyles = styled.div<PropTypes>`
       props.bgColorScheme === 'normal' ? colors.main : 'none'};
 
     &:focus + .input_label-normal {
-      transform: translateY(-25px) translateX(-9px) scale(0.85);
+      transform: translateY(-25px) translateX(-14px) scale(0.85);
       padding: 0px 5px;
       color: ${colors.main};
     }
     &:not(:placeholder-shown) + .input_label-normal {
-      transform: translateY(-25px) translateX(-9px) scale(0.85);
+      transform: translateY(-25px) translateX(-14px) scale(0.85);
       padding: 0px 5px;
       color: ${colors.main};
     }

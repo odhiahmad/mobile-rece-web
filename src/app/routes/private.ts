@@ -3,6 +3,7 @@ import PageSaving from 'app/components/pages/saving/loadable';
 import PageWithdraw from 'app/components/pages/withdraw/loadable';
 import PageProfile from 'app/components/pages/profile/loadable';
 import PageTransfer from 'app/components/pages/transfer/loadable';
+import PageInvest from 'app/components/pages/invest/loadable';
 
 const routes = [
   {
@@ -34,6 +35,12 @@ const routes = [
     name: 'page-transfer',
     component: PageTransfer,
     path: '/transfer',
+  },
+  {
+    key: 'page-invest',
+    name: 'page-invest',
+    component: PageInvest,
+    path: '/invest',
   },
 ];
 
