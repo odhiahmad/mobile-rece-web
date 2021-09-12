@@ -39,21 +39,21 @@ export function PageProfile() {
           </div>
           <div className="profile_menu bg-color-white100 mb-1 pl-1-half pr-1-half">
             <div className="flex flex-v-center flex-h-space main-border-bottom pt-1-half pb-1-half">
-              <div>
+              <div className="flex flex-v-center">
                 <img className="mr-half" src={FaqLogo} alt="Faq Logo" />
                 <span>FAQs</span>
               </div>
               <img src={ChevronLogo} alt="Right Chevron" />
             </div>
             <div className="flex flex-v-center flex-h-space main-border-bottom pt-1-half pb-1-half">
-              <div>
+              <div className="flex flex-v-center">
                 <img className="mr-half" src={HelpLogo} alt="Faq Logo" />
                 <span>Bantuan</span>
               </div>
               <img src={ChevronLogo} alt="Right Chevron" />
             </div>
             <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half">
-              <div>
+              <div className="flex flex-v-center">
                 <img className="mr-half" src={AboutLogo} alt="Faq Logo" />
                 <span>Tentang Aplikasi</span>
               </div>
@@ -62,7 +62,7 @@ export function PageProfile() {
           </div>
           <div className="profile_logout bg-color-white100 mb-1 pl-1-half pr-1-half">
             <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half">
-              <div>
+              <div className="flex flex-v-center">
                 <img className="mr-half" src={LogoutLogo} alt="Faq Logo" />
                 <span>Log Out</span>
               </div>
