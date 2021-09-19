@@ -1,5 +1,6 @@
 import PageLogin from 'app/components/pages/login/loadable';
 import PageRegistration from 'app/components/pages/registration/loadable';
+import PageOtp from 'app/components/pages/otp/loadable';
 
 const routes = [
   {
@@ -13,6 +14,12 @@ const routes = [
     name: 'page-register',
     component: PageRegistration,
     path: '/register',
+  },
+  {
+    key: 'page-otp',
+    name: 'page-otp',
+    component: PageOtp,
+    path: '/otp',
   },
 ];
 

@@ -21,3 +21,11 @@ export const sizes = {
 export const zIndexs = {
   topbar: 50,
 };
+
+export const windows = {
+  medium: (styles: string) => `
+    @media screen and (min-width: 600px) {
+      ${styles}
+    }
+  `,
+};

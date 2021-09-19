@@ -41,6 +41,14 @@ const TextStyles = createGlobalStyle`
   }
 
   /* COLOR */
+  .color-black30 {
+    color: ${colors.black30}
+  }
+
+  .bg-color-black30 {
+    background-color: ${colors.black30};
+  }
+
   .color-black50 {
     color: ${colors.black50}
   }
