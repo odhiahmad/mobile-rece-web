@@ -5,6 +5,7 @@ import PageProfile from 'app/components/pages/profile/loadable';
 import PageTransfer from 'app/components/pages/transfer/loadable';
 import PageInvest from 'app/components/pages/invest/loadable';
 import PageBill from 'app/components/pages/bill/loadable';
+import PageKyc from 'app/components/pages/kyc/loadable';
 
 const routes = [
   {
@@ -48,6 +49,12 @@ const routes = [
     name: 'page-bill-payment',
     component: PageBill,
     path: '/bill-payment',
+  },
+  {
+    key: 'page-kyc',
+    name: 'page-kyc',
+    component: PageKyc,
+    path: '/kyc',
   },
 ];
 

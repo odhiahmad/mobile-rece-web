@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { colors, zIndexs } from 'styles/variables';
+import { colors, sizes, zIndexs } from 'styles/variables';
 
 const Styles = styled.div`
   .topbar {
     position: fixed;
-    height: 60px;
+    height: ${sizes.topbarHeight}px;
     display: flex;
     align-items: center;
     padding: 0rem 1rem;
