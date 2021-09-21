@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 // import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, HashRouter } from 'react-router-dom';
 import { GlobalStyle } from 'styles/global-styles';
 import PaddingStyles from 'styles/paddings';
 import TextStyles from 'styles/texts';
@@ -28,7 +28,7 @@ export function App() {
   // const { i18n } = useTranslation();
   useInjectSaga({ key: 'saga', saga: mySaga });
   return (
-    <BrowserRouter>
+    <HashRouter>
       <GlobalStyle />
       <PaddingStyles />
       <TextStyles />
@@ -44,6 +44,6 @@ export function App() {
           <Route component={NotFoundPage} />
         </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

@@ -2,8 +2,8 @@
 import { useHistory } from 'react-router-dom';
 
 const route = {
-  home: '/',
-  register: '/register',
+  home: '/#/',
+  register: '/#/register',
 };
 
 const useRouter = () => {
