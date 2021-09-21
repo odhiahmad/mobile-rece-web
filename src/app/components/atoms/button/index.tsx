@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ButtonStyles from './styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { INode } from 'types/common';
 
 export interface PropTypes {
@@ -10,6 +11,7 @@ export interface PropTypes {
   onClick?: () => any;
   fullWidth?: boolean;
   className?: string;
+  loading?: boolean;
 }
 
 export function Button({
@@ -20,6 +22,7 @@ export function Button({
   className = '',
   type = 'button',
   id = '',
+  loading = false,
 }: PropTypes) {
   return (
     <>
@@ -31,7 +34,12 @@ export function Button({
         onClick={onClick}
         fullWidth={fullWidth}
       >
-        {children}
+        {loading ? (
+          <CircularProgress color="inherit" size={30} />
+        ) : (
+          // prettier-ignore
+          children
+        )}
       </ButtonStyles>
     </>
   );
