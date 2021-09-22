@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { configureAppStore } from 'store/configureStore';
 import { getToken } from 'utils/cookie';
 
@@ -10,13 +10,9 @@ const initialHeader = {
   Authorization: '',
 };
 
-const claimBaseUrl = process.env.VUE_APP_BASE_API;
-const userBaseUrl = process.env.VUE_APP_BASE_API_USER;
-const prodBaseUrl = process.env.VUE_APP_BASE_API_PRODUCTION;
-
 export function setUpAxios() {
   axiosInstance = axios.create({
-    baseURL: claimBaseUrl,
+    baseURL: '',
   });
 
   axiosInstance.interceptors.response.use(
@@ -42,16 +38,9 @@ export function setUpAxios() {
   );
 }
 
-export default function Axios(config, service) {
-  // DEFINE BASE URL BASED ON SERVICE CALLED 'user' | 'production' | 'claim' | undefined
-  let baseURL;
-  if (service === 'user') {
-    baseURL = userBaseUrl;
-  } else if (service === 'production') {
-    baseURL = prodBaseUrl;
-  } else if (service === 'claim' || !service) {
-    baseURL = claimBaseUrl;
-  }
+export default function Axios(config: AxiosRequestConfig) {
+  // DEFINE BASE URL BASED ON SERVICE
+  const baseURL = '';
   // INIT HEADER
   const headers = {
     ...initialHeader,

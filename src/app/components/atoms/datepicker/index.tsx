@@ -5,10 +5,11 @@ import Input from 'app/components/atoms/input/loadable';
 import dayjs from 'dayjs';
 
 export interface PropTypes {
-  dateType: 'date' | 'datetime';
+  // dateType: 'date' | 'datetime';
   id: string;
   label?: string;
   format?: string;
+  outputFormat?: string;
   value?: string;
   minDate?: any;
   maxDate?: any;
@@ -32,6 +33,7 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
   id = '',
   label = '',
   format = 'DD-MM-YYYY',
+  outputFormat = 'DD-MM-YYYY',
   value = '',
   minDate = undefined,
   maxDate = undefined,
@@ -55,14 +57,14 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
   const beforeOnChange = date => {
     setBeen(true);
     setOpen(false);
-    onChange(date, date.format(format));
+    onChange(date, date.format(outputFormat));
   };
   return (
     <MuiPickersUtilsProvider utils={dateDayJsUtils}>
       <DatePicker
         id={id}
         label={label}
-        value={dayjs(value, format).toDate()}
+        value={dayjs(value, outputFormat).toDate()}
         onChange={beforeOnChange}
         minDate={minDate}
         maxDate={maxDate}
@@ -74,7 +76,7 @@ export const DatePickerComponent: React.FunctionComponent<PropTypes> = ({
           <Input
             id={id}
             name={name}
-            value={hasBeen ? dayjs(value, format).format(format) : ''}
+            value={hasBeen ? dayjs(value, outputFormat).format(format) : ''}
             type="text"
             logo={logo}
             placeholder={placeholder}

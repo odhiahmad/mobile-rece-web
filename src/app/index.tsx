@@ -21,8 +21,11 @@ import publics from 'app/routes/public';
 import privates from 'app/routes/private';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
+import { setUpAxios } from 'services';
 
 dayjs.extend(customParseFormat);
+// INITIALIZE AXIOS INSTANCE WITH INTERCEPTORS
+setUpAxios();
 
 export function App() {
   // const { i18n } = useTranslation();

@@ -8,7 +8,7 @@ interface PropTypes {
   value?: string | number | undefined | null;
   label?: string;
   masking?: 'rupiah' | 'none';
-  // logo?: string | null;
+  logo?: string | null;
   colorScheme?: 'normal' | 'grey';
   placeholder?: string;
   error?: boolean;
@@ -25,9 +25,13 @@ export function InputNumber({
   label = '',
   masking = 'rupiah',
   placeholder = '',
+  colorScheme = 'normal',
+  logo = '',
   onChange = () => {},
   onBlur = () => {},
   onClick = () => {},
+  error = false,
+  errorMsg = '',
 }: PropTypes) {
   const [value, setValue] = React.useState(inValue);
   const onBeforeChange = (event, value) => {
@@ -53,11 +57,15 @@ export function InputNumber({
         id={id}
         name={name}
         type="text"
+        colorScheme={colorScheme}
+        logo={logo}
         label={label}
         placeholder={placeholder}
         onChange={onBeforeChange}
         onBlur={onBlur}
         onClick={onClick}
+        error={error}
+        errorMsg={errorMsg}
         {...valueProps}
       />
     </>

@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import Input from 'app/components/atoms/input/loadable';
+import InputNumber from 'app/components/atoms/input-number/loadable';
 import Button from 'app/components/atoms/button/loadable';
 import DatePicker from 'app/components/atoms/datepicker/loadable';
 import userLogo from 'assets/img/login/user.png';
@@ -10,17 +11,24 @@ import lockLogo from 'assets/img/login/lock.png';
 import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
 import calendarLogo from 'assets/img/calendar.png';
+import { registerUser } from 'services/user';
+import useRouter from 'app/components/hooks/router';
 // import dayjs from 'dayjs';
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
-  ktp: Yup.number()
+  email: Yup.string()
+    .email('Format email salah')
+    .required('Email tidak boleh kosong'),
+  ktp: Yup.string()
     .typeError('KTP tidak boleh kosong')
     .required('KTP tidak boleh kosong'),
-  phone: Yup.number()
+  phone: Yup.string()
     .typeError('Nomor handphone tidak boleh kosong')
     .required('Nomor handphone tidak boleh kosong'),
   mother: Yup.string().required('Nama ibu kandung tidak boleh kosong'),
+  bank: Yup.string().required('Nomor rekening tidak boleh kosong'),
+  birthplace: Yup.string().required('Tempat lahir tidak boleh kosong'),
   birthdate: Yup.string().required('Tanggal lahir tidak boleh kosong'),
   password: Yup.string().required('Password tidak boleh kosong'),
   confirmPassword: Yup.string().required(
@@ -29,19 +37,49 @@ const loginSchema = Yup.object().shape({
 });
 
 export function FormRegister() {
+  const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+  const onSubmit = async values => {
+    try {
+      setLoading(true);
+      await registerUser({
+        Name: values.name,
+        PhoneNumber: values.phone,
+        Email: values.email,
+        BirthPlace: values.birthplace,
+        BirthDate: values.birthdate,
+        MotherName: values.mother,
+        BankAccount: values.name,
+      });
+      router.push(router.route.home);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: '',
-      ktp: undefined,
-      phone: undefined,
+      email: '',
+      ktp: '',
+      phone: '',
       mother: '',
+      bank: '',
+      birthplace: '',
       birthdate: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      console.log(values);
+      if (values.password !== values.confirmPassword) {
+        formik.setErrors({
+          confirmPassword: 'Konfimasi password harus sama dengan password',
+        });
+      } else {
+        onSubmit(values);
+      }
     },
   });
   return (
@@ -60,11 +98,23 @@ export function FormRegister() {
           errorMsg={formik.errors.name}
         />
         <Input
+          id="email-input"
+          name="email"
+          logo={userLogo}
+          colorScheme="grey"
+          placeholder="Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.email !== undefined && formik.touched.email}
+          errorMsg={formik.errors.email}
+        />
+        <InputNumber
           id="ktp-input"
           name="ktp"
-          type="number"
           logo={ktpLogo}
           colorScheme="grey"
+          masking="none"
           placeholder="Nomor KTP"
           value={formik.values.ktp}
           onChange={formik.handleChange}
@@ -72,12 +122,12 @@ export function FormRegister() {
           error={formik.errors.ktp !== undefined && formik.touched.ktp}
           errorMsg={formik.errors.ktp}
         />
-        <Input
+        <InputNumber
           id="phone-input"
           name="phone"
-          type="number"
           logo={phoneLogo}
           colorScheme="grey"
+          masking="none"
           placeholder="Nomor HP"
           value={formik.values.phone}
           onChange={formik.handleChange}
@@ -85,11 +135,25 @@ export function FormRegister() {
           error={formik.errors.phone !== undefined && formik.touched.phone}
           errorMsg={formik.errors.phone}
         />
+        <Input
+          id="birthplace-input"
+          name="birthplace"
+          logo={userLogo}
+          colorScheme="grey"
+          placeholder="Tempat Lahir"
+          value={formik.values.birthplace}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.birthplace !== undefined && formik.touched.birthplace
+          }
+          errorMsg={formik.errors.birthplace}
+        />
         <DatePicker
           id="birth-date"
           name="birthdate"
-          dateType="date"
           format="DD-MM-YYYY"
+          outputFormat="YYYY-MM-DD"
           logo={calendarLogo}
           colorScheme="grey"
           placeholder="Tanggal Lahir"
@@ -114,6 +178,19 @@ export function FormRegister() {
           onBlur={formik.handleBlur}
           error={formik.errors.mother !== undefined && formik.touched.mother}
           errorMsg={formik.errors.mother}
+        />
+        <InputNumber
+          id="bank-input"
+          name="bank"
+          logo={ktpLogo}
+          colorScheme="grey"
+          masking="none"
+          placeholder="Nomor Rekening Bank"
+          value={formik.values.bank}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.bank !== undefined && formik.touched.bank}
+          errorMsg={formik.errors.bank}
         />
         <Input
           id="password-input"
@@ -147,7 +224,13 @@ export function FormRegister() {
           errorMsg={formik.errors.confirmPassword}
         />
       </div>
-      <Button id="register-submit" type="submit" fullWidth className="mb-1">
+      <Button
+        id="register-submit"
+        type="submit"
+        fullWidth
+        loading={loading}
+        className="mb-1"
+      >
         MASUK
       </Button>
     </form>
