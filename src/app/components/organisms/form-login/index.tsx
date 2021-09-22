@@ -6,6 +6,8 @@ import Input from 'app/components/atoms/input/loadable';
 import Button from 'app/components/atoms/button/loadable';
 import userLogo from 'assets/img/login/user.png';
 import lockLogo from 'assets/img/login/lock.png';
+import { login as loginService } from 'services/auth';
+import { setToken } from 'utils/cookie';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required('Username tidak boleh kosong'),
@@ -13,6 +15,26 @@ const loginSchema = Yup.object().shape({
 });
 
 export function FormLogin() {
+  const [loading, setLoading] = React.useState(false);
+  const onSubmit = async values => {
+    try {
+      setLoading(true);
+      const response = await loginService({
+        username: values.username,
+        password: values.password,
+      });
+      const { data } = response;
+      setToken(data.Data);
+      window.location.reload();
+      setLoading(false);
+    } catch (error) {
+      // [NOTE] DELETE WHEN FULLY INTEGRATE WITH API, FOR TESTING PURPOSE ONLY
+      setToken('test');
+      window.location.reload();
+      setLoading(false);
+    }
+  };
+  // FORMIK
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -20,7 +42,7 @@ export function FormLogin() {
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      console.log(values);
+      onSubmit(values);
     },
   });
   return (
@@ -54,7 +76,13 @@ export function FormLogin() {
           errorMsg={formik.errors.password}
         />
       </div>
-      <Button id="login-submit" type="submit" fullWidth className="mb-1">
+      <Button
+        id="login-submit"
+        type="submit"
+        loading={loading}
+        fullWidth
+        className="mb-1"
+      >
         MASUK
       </Button>
     </form>

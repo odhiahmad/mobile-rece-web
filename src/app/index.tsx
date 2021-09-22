@@ -7,8 +7,10 @@
  */
 
 import * as React from 'react';
-// import { Helmet } from 'react-helmet-async';
 import { Switch, Route, HashRouter } from 'react-router-dom';
+import { connect, useDispatch } from 'react-redux';
+import { compose } from 'redux';
+
 import { GlobalStyle } from 'styles/global-styles';
 import PaddingStyles from 'styles/paddings';
 import TextStyles from 'styles/texts';
@@ -22,14 +24,25 @@ import privates from 'app/routes/private';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import { setUpAxios } from 'services';
+import { getToken } from 'utils/cookie';
+import { login } from 'store/auth/actions';
+
+interface PropTypes {
+  isLoggedin: boolean;
+}
 
 dayjs.extend(customParseFormat);
 // INITIALIZE AXIOS INSTANCE WITH INTERCEPTORS
 setUpAxios();
 
-export function App() {
+function Apps({ isLoggedin = false }: PropTypes) {
   // const { i18n } = useTranslation();
   useInjectSaga({ key: 'saga', saga: mySaga });
+  const dispatch = useDispatch();
+  const token = getToken();
+  if (token) {
+    dispatch(login());
+  }
   return (
     <HashRouter>
       <GlobalStyle />
@@ -38,15 +51,25 @@ export function App() {
       <AllignmentStyles />
       <div className="main-screen">
         <Switch>
-          {publics.map(({ key, path, component }) => (
-            <Route key={key} path={path} component={component} exact />
-          ))}
-          {privates.map(({ key, path, component }) => (
-            <Route key={key} path={path} component={component} exact />
-          ))}
+          {!isLoggedin &&
+            publics.map(({ key, path, component }) => (
+              <Route key={key} path={path} component={component} exact />
+            ))}
+          {isLoggedin &&
+            privates.map(({ key, path, component }) => (
+              <Route key={key} path={path} component={component} exact />
+            ))}
           <Route component={NotFoundPage} />
         </Switch>
       </div>
     </HashRouter>
   );
 }
+
+const mapStateToProps = state => ({
+  isLoggedin: state.auth.isLoggedin,
+});
+
+const withConnect = connect(mapStateToProps, null);
+
+export default compose<React.ComponentType>(withConnect, React.memo)(Apps);

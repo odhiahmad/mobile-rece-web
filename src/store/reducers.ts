@@ -6,6 +6,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 
 import { InjectedReducersType } from 'utils/types/injector-typings';
 import app from 'store/app/reducers';
+import auth from 'store/auth/reducers';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -24,6 +25,7 @@ export function createReducer(injectedReducers: InjectedReducersType = {}) {
   // }
   return combineReducers({
     app,
+    auth,
     ...injectedReducers,
   });
 }

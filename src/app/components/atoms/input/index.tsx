@@ -77,6 +77,7 @@ export function Input({
             onKeyUp={onBlur}
             type={type === 'password' && showPass ? 'text' : type}
             placeholder={colorScheme === 'grey' ? placeholder : ' '}
+            autoComplete="off"
             {...valueProps}
           />
         )}

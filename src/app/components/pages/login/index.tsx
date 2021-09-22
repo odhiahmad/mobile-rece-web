@@ -11,7 +11,7 @@ export function PageLogin() {
   return (
     <>
       <Helmet>
-        <title>Login Page</title>
+        <title>Halaman Login</title>
         <meta name="description" content="Login page for RECE App" />
       </Helmet>
       <PageLoginStyles>

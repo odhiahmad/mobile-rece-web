@@ -12,7 +12,7 @@ const routes = [
     key: 'page-home',
     name: 'page-home',
     component: PageHome,
-    path: '/home',
+    path: '/',
   },
   {
     key: 'page-saving',
