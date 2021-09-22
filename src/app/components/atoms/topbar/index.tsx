@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Styles from './styles';
 import LeftChevron from 'assets/img/left-chevron.png';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 export function TopBar() {
   // const body = document.body;

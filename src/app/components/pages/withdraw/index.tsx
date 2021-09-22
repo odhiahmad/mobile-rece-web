@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { colors } from 'styles/variables';
 import TopBar from 'app/components/atoms/topbar/loadable';
 import InputNumber from 'app/components/atoms/input-number/loadable';
-import Select from 'app/components/atoms/select-bottom-sheet/loadable';
 import Button from 'app/components/atoms/button/loadable';
 import SuccessLogo from 'assets/img/success.png';
 import { rpMasking } from 'utils/number';

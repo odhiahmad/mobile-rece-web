@@ -87,13 +87,13 @@ export function Input({
             <img src={EyeLogo} alt="Show Password Logo" />
           </button>
         )}
+        {colorScheme === 'normal' && (
+          <div className="input_label-normal">{label}</div>
+        )}
         {isSelect && (
           <button type="button">
             <img src={DownChevron} alt="Down Chevron" />
           </button>
-        )}
-        {colorScheme === 'normal' && (
-          <div className="input_label-normal">{label}</div>
         )}
         {error && (
           <span className="input_error-msg ellipsis-text">{errorMsg}</span>

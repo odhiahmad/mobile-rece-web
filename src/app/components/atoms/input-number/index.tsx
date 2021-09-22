@@ -26,7 +26,7 @@ export function InputNumber({
   masking = 'rupiah',
   placeholder = '',
   colorScheme = 'normal',
-  logo = '',
+  logo = null,
   onChange = () => {},
   onBlur = () => {},
   onClick = () => {},

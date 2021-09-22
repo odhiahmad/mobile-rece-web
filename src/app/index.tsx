@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import { setUpAxios } from 'services';
 import { getToken } from 'utils/cookie';
 import { login } from 'store/auth/actions';
+import ScrollToTop from './routes/scroll-to-top';
 
 interface PropTypes {
   isLoggedin: boolean;
@@ -36,6 +37,7 @@ dayjs.extend(customParseFormat);
 setUpAxios();
 
 function Apps({ isLoggedin = false }: PropTypes) {
+  // INJECT LOGIN AND SAGA
   // const { i18n } = useTranslation();
   useInjectSaga({ key: 'saga', saga: mySaga });
   const dispatch = useDispatch();
@@ -45,6 +47,7 @@ function Apps({ isLoggedin = false }: PropTypes) {
   }
   return (
     <HashRouter>
+      <ScrollToTop />
       <GlobalStyle />
       <PaddingStyles />
       <TextStyles />

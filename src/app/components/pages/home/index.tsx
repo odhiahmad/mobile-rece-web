@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+
 import BellLogo from 'assets/img/bell.png';
 import ReceLogo from 'assets/img/rece-white.png';
 import CardChipLogo from 'assets/img/card-chip.png';
@@ -9,10 +11,13 @@ import InvestasiLogo from 'assets/img/investasi.png';
 import InvoiceLogo from 'assets/img/invoice.png';
 import { colors } from 'styles/variables';
 import PageHomeStyles from './styles';
+import useRouter from 'app/components/hooks/router';
+import BottomBar from 'app/components/atoms/bottombar/loadable';
 
 export function PageHome() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
+  const router = useRouter();
   return (
     <>
       <Helmet>
@@ -36,6 +41,7 @@ export function PageHome() {
                 <img src={BellLogo} alt="Bell" />
               </div>
             </div>
+            {/* [NOTE] CAN BE SPLIT INTO SMALLER COMPONENT */}
             <div className="homepage_user-card">
               <div className="homepage_user-card-wrapper flex-column flex-h-space">
                 <div className="flex flex-h-space flex-v-center">
@@ -65,30 +71,39 @@ export function PageHome() {
             <div className="flex flex-h-space flex-v-center border-radius-main bg-color-white100 pl-1 pt-1 pr-1 pb-1">
               <div className="flex-column flex-v-center pointer">
                 <div className="homepage_menu-card-logo flex flex-v-center flex-h-center mb-half">
-                  <img src={TransferLogo} alt="Transfer" />
+                  <Link to={router.route.transfer}>
+                    <img src={TransferLogo} alt="Transfer" />
+                  </Link>
                 </div>
                 <span className="text-info">Transfer</span>
               </div>
               <div className="flex-column flex-v-center pointer">
                 <div className="homepage_menu-card-logo flex flex-v-center flex-h-center mb-half">
-                  <img src={AtmLogo} alt="Tarik" />
+                  <Link to={router.route.withdraw}>
+                    <img src={AtmLogo} alt="Tarik" />
+                  </Link>
                 </div>
                 <span className="text-info">Tarik</span>
               </div>
               <div className="flex-column flex-v-center pointer">
                 <div className="homepage_menu-card-logo flex flex-v-center flex-h-center mb-half">
-                  <img src={InvestasiLogo} alt="Investasi" />
+                  <Link to={router.route.invest}>
+                    <img src={InvestasiLogo} alt="Investasi" />
+                  </Link>
                 </div>
                 <span className="text-info">Investasi</span>
               </div>
               <div className="flex-column flex-v-center pointer">
                 <div className="homepage_menu-card-logo flex flex-v-center flex-h-center mb-half">
-                  <img src={InvoiceLogo} alt="Tagihan" />
+                  <Link to={router.route.bill}>
+                    <img src={InvoiceLogo} alt="Tagihan" />
+                  </Link>
                 </div>
                 <span className="text-info">Tagihan</span>
               </div>
             </div>
           </div>
+          {/* [NOTE] CAN BE SPLIT INTO SMALLER COMPONENT */}
           <div className="homepage_bottom-card border-radius-big pl-1-half pt-1-half pr-1-half pb-1-half bg-color-white100">
             <div className="mb-1">
               <span className="text-sub-title text-heavy">
@@ -146,6 +161,7 @@ export function PageHome() {
               </div>
             </div>
           </div>
+          <BottomBar />
         </div>
       </PageHomeStyles>
     </>

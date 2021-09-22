@@ -12,6 +12,16 @@ import Styles from './styles';
 export function PageTransfer() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
+  const options = [
+    {
+      label: 'Dana',
+      value: '1',
+    },
+    {
+      label: 'Gopay',
+      value: '2',
+    },
+  ];
   return (
     <>
       <Helmet>
@@ -35,6 +45,7 @@ export function PageTransfer() {
                 id="transfer-fund-source"
                 name="fund-source"
                 label="Transfer ke mana ?"
+                options={options}
               />
               <InputNumber
                 id="transfer-phone"

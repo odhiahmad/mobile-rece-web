@@ -43,7 +43,7 @@ export function SelectBottomSheet({
   onBlur = () => {},
   onClick = () => {},
 }: PropTypes) {
-  const [value, setValue] = React.useState(inValue);
+  const [value, setValue] = React.useState(inValue || '');
   const [isOpen, setOpen] = React.useState(false);
   // CALLBACK
   const onDismiss = () => {
@@ -60,7 +60,7 @@ export function SelectBottomSheet({
     onClick();
   };
   const valueProps =
-    value !== null
+    value !== undefined
       ? {
           value:
             value === ''
