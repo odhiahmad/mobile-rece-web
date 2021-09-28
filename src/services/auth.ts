@@ -12,6 +12,7 @@ export const login = async (payload: ILogin) => {
       method: 'POST',
       data: payload,
     });
+
     return response;
   } catch (error) {
     throw error;

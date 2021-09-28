@@ -44,12 +44,15 @@ export function FormRegister() {
       setLoading(true);
       await registerUser({
         Name: values.name,
+        Username: values.email,
+        Nik: values.ktp,
         PhoneNumber: values.phone,
         Email: values.email,
         BirthPlace: values.birthplace,
         BirthDate: values.birthdate,
         MotherName: values.mother,
         BankAccount: values.name,
+        Password: values.password,
       });
       router.push(router.route.home);
       setLoading(false);

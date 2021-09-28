@@ -40,7 +40,7 @@ export function setUpAxios() {
 
 export default function Axios(config: AxiosRequestConfig) {
   // DEFINE BASE URL BASED ON SERVICE
-  const baseURL = '';
+  const baseURL = 'https://6566-182-253-34-181.ngrok.io';
   // INIT HEADER
   const headers = {
     ...initialHeader,

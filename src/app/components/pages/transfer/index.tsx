@@ -21,6 +21,14 @@ export function PageTransfer() {
       label: 'Gopay',
       value: '2',
     },
+    {
+      label: 'Gopay',
+      value: '2',
+    },
+    {
+      label: 'Gopay',
+      value: '2',
+    },
   ];
   return (
     <>

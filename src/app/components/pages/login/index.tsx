@@ -5,6 +5,7 @@ import PageLoginStyles from './styles';
 import { H1Main } from 'styles/texts';
 import FormLogin from 'app/components/organisms/form-login/loadable';
 import useRouter from 'app/components/hooks/router';
+import { Link } from 'react-router-dom';
 
 export function PageLogin() {
   const router = useRouter();
@@ -30,8 +31,10 @@ export function PageLogin() {
             </span>
           </div>
           <FormLogin />
+
           <span>
-            Belum punya akun RECE? <a href={router.route.register}>Daftar</a>
+            Belum punya akun RECE?{' '}
+            <Link to={router.route.register}>Daftar</Link>
           </span>
         </div>
       </PageLoginStyles>

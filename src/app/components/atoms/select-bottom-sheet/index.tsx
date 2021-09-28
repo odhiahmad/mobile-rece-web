@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sheet, { SheetRef } from 'react-modal-sheet';
+import Sheet from 'react-modal-sheet';
 import styled from 'styled-components';
 import Input from 'app/components/atoms/input/loadable';
 import Button from 'app/components/atoms/button/loadable';
