@@ -13,11 +13,51 @@ import { colors } from 'styles/variables';
 import PageHomeStyles from './styles';
 import useRouter from 'app/components/hooks/router';
 import BottomBar from 'app/components/atoms/bottombar/loadable';
+import Skeleton from 'react-loading-skeleton';
+import { rpMasking } from 'utils/number';
+import { riwayat } from 'services/riwayat';
 
+const dataRiwayat = [
+  {
+    id: 0,
+    nominal: 5300,
+    waktu: '12-02-2008',
+    fundSource: 'Tokopedia',
+  },
+  {
+    id: 1,
+    nominal: 3000,
+    waktu: '12-02-2008',
+    fundSource: 'Dana',
+  },
+  {
+    id: 2,
+    nominal: 5000,
+    waktu: '12-02-2008',
+    fundSource: 'Shopepay',
+  },
+];
 export function PageHome() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
   const router = useRouter();
+
+  const [loading, setLoading] = React.useState(false);
+  React.useEffect(() => {
+    getRiwayat();
+  }, []);
+  const getRiwayat = async () => {
+    try {
+      setLoading(true);
+      await riwayat({
+        Id: '23',
+      });
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -29,12 +69,16 @@ export function PageHome() {
           <div className="homepage_top-card relative bg-color-white100 pt-1-half pr-1-half pl-1-half border-radius-main">
             <div className="flex pb-1-half">
               <div className="flex-column flex-full pr-1-half">
-                <span className="text-sub-title text-heavy mb-half">
-                  Halo Kurnia!
-                </span>
+                {loading === true ? (
+                  <Skeleton height={10} />
+                ) : (
+                  <span className="text-sub-title text-heavy mb-half">
+                    Halo Kurnia!
+                  </span>
+                )}
+
                 <span className="text-info text-thin">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod dipiscing .
+                  Selamat datang kembali!
                 </span>
               </div>
               <div>
@@ -47,15 +91,25 @@ export function PageHome() {
                 <div className="flex flex-h-space flex-v-center">
                   <div className="color-white100 flex-column">
                     <span className="text-info-small">Saldo Tabungan</span>
-                    <span className="text-title text-heavy">Rp 5.750.0000</span>
+                    {loading === true ? (
+                      <Skeleton height={20} />
+                    ) : (
+                      <span className="text-title text-heavy">
+                        Rp 5.750.0000
+                      </span>
+                    )}
                   </div>
                   <img className="homepage_rece" src={ReceLogo} alt="Rece" />
                 </div>
                 <div className="flex flex-h-space flex-v-center">
                   <div className="color-white100 flex-column">
-                    <span className="text-sub-title">
-                      0012 - 0812 - 3456 - 7890
-                    </span>
+                    {loading === true ? (
+                      <Skeleton height={20} />
+                    ) : (
+                      <span className="text-sub-title">
+                        0012 - 0812 - 3456 - 7890
+                      </span>
+                    )}
                     <span className="text-info-small">Kurnia Ramadhani</span>
                   </div>
                   <img
@@ -110,56 +164,34 @@ export function PageHome() {
                 Riwayat Transaksi
               </span>
             </div>
-            <div className="homepage_row-wrapper">
-              <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
-                <div className="flex-column">
-                  <span className="text-info text-bold">Transfer RECE</span>
-                  <span className="text-info-small text-thin">
-                    Melalui Tokopedia
-                  </span>
+            {loading === true ? (
+              dataRiwayat.map(opt => (
+                <div className="main-border-bottom">
+                  <Skeleton height={50} />
                 </div>
-                <div className="flex-column">
-                  <span className="text-info text-bold color-main text-end">
-                    Rp 12.000
-                  </span>
-                  <span className="text-info-small text-thin text-end">
-                    Hari ini, 12:30
-                  </span>
-                </div>
+              ))
+            ) : (
+              <div className="homepage_row-wrapper">
+                {dataRiwayat.map(opt => (
+                  <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
+                    <div className="flex-column">
+                      <span className="text-info text-bold">Transfer RECE</span>
+                      <span className="text-info-small text-thin">
+                        Melalui Tokopedia
+                      </span>
+                    </div>
+                    <div className="flex-column">
+                      <span className="text-info text-bold color-main text-end">
+                        {rpMasking(opt.nominal)}
+                      </span>
+                      <span className="text-info-small text-thin text-end">
+                        Hari ini, {opt.waktu}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
-                <div className="flex-column">
-                  <span className="text-info text-bold">Transfer RECE</span>
-                  <span className="text-info-small text-thin">
-                    Melalui Tokopedia
-                  </span>
-                </div>
-                <div className="flex-column">
-                  <span className="text-info text-bold color-main text-end">
-                    Rp 12.000
-                  </span>
-                  <span className="text-info-small text-thin text-end">
-                    Hari ini, 12:30
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
-                <div className="flex-column">
-                  <span className="text-info text-bold">Transfer RECE</span>
-                  <span className="text-info-small text-thin">
-                    Melalui Tokopedia
-                  </span>
-                </div>
-                <div className="flex-column">
-                  <span className="text-info text-bold color-main text-end">
-                    Rp 12.000
-                  </span>
-                  <span className="text-info-small text-thin text-end">
-                    Hari ini, 12:30
-                  </span>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
           <BottomBar />
         </div>
