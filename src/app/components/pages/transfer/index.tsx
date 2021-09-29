@@ -118,10 +118,7 @@ export function PageTransfer() {
             </div>
             <span className="text-info">
               Saya setuju dengan{' '}
-              <a className="color-main" href="">
-                syarat dan ketentuan
-              </a>{' '}
-              yang berlaku
+              <p className="color-main">syarat dan ketentuan</p> yang berlaku
             </span>
           </div>
           <div className="transfer_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">

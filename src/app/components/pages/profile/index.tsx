@@ -9,6 +9,10 @@ import AboutLogo from 'assets/img/about.png';
 import LogoutLogo from 'assets/img/logout.png';
 import ChevronLogo from 'assets/img/right-chevron.png';
 import Styles from './styles';
+import { Link } from 'react-router-dom';
+import { removeToken } from 'utils/cookie';
+
+// import Button from 'app/components/atoms/button/loadable';
 
 export function PageProfile() {
   const body = document.body;
@@ -29,7 +33,7 @@ export function PageProfile() {
                 <img src={SuccessLogo} alt="User Logo" />
               </div>
               <span className="text-info text-heavy color-main pointer">
-                Ubah Foto
+                <Link to="profile-ubah">Ubah Profil</Link>
               </span>
               <span className="text-sub-title text-heavy mt-1-half">
                 Kurnia Ramadani
@@ -61,7 +65,13 @@ export function PageProfile() {
             </div>
           </div>
           <div className="profile_logout bg-color-white100 mb-1 pl-1-half pr-1-half">
-            <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half">
+            <div
+              onClick={() => {
+                removeToken();
+                window.location.href = '/';
+              }}
+              className="flex flex-v-center flex-h-space pt-1-half pb-1-half"
+            >
               <div className="flex flex-v-center">
                 <img className="mr-half" src={LogoutLogo} alt="Faq Logo" />
                 <span>Log Out</span>

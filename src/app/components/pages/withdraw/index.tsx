@@ -68,6 +68,7 @@ export function PageWithdraw() {
       });
 
       setLoading(false);
+      setLayout(1);
     } catch (error) {
       setLoading(false);
     }

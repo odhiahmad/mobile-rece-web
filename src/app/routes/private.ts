@@ -1,7 +1,10 @@
 import PageHome from 'app/components/pages/home/loadable';
 import PageSaving from 'app/components/pages/saving/loadable';
 import PageWithdraw from 'app/components/pages/withdraw/loadable';
-import PageProfile from 'app/components/pages/profile/loadable';
+import {
+  PageProfile,
+  PageUbahProfile,
+} from 'app/components/pages/profile/loadable';
 import PageTransfer from 'app/components/pages/transfer/loadable';
 import PageInvest from 'app/components/pages/invest/loadable';
 import PageBill from 'app/components/pages/bill/loadable';
@@ -31,6 +34,12 @@ const routes = [
     name: 'page-profile',
     component: PageProfile,
     path: '/profile',
+  },
+  {
+    key: 'page-ubah-profile',
+    name: 'page-ubah-profile',
+    component: PageUbahProfile,
+    path: '/profile-ubah',
   },
   {
     key: 'page-transfer',

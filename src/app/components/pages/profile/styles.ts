@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from 'styles/variables';
+// import { colors } from 'styles/variables';
 
 const Styles = styled.div`
   .profile_photo {

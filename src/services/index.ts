@@ -26,12 +26,12 @@ export function setUpAxios() {
           error.response.data.name &&
           error.response.data.name === 'CREDENTIAL_NOT_MATCH'
         ) {
-          // message.warning('Credential Login Anda Salah');
+          alert('Credential Login Anda Salah');
         } else {
-          // message.warning('Sesi Anda telah habis, silahkan login kembali');
+          alert('Sesi Anda telah habis, silahkan login kembali');
         }
         const store = configureAppStore();
-        // store.dispatch('auth/forceLogout');
+        store.dispatch('auth/forceLogout');
       }
       return Promise.reject(error);
     },
@@ -40,7 +40,7 @@ export function setUpAxios() {
 
 export default function Axios(config: AxiosRequestConfig) {
   // DEFINE BASE URL BASED ON SERVICE
-  const baseURL = 'https://6566-182-253-34-181.ngrok.io';
+  const baseURL = 'http://6ea1-182-253-245-254.ngrok.io';
   // INIT HEADER
   const headers = {
     ...initialHeader,

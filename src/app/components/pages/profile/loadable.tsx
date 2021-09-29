@@ -4,9 +4,12 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-const PageProfile = lazyLoad(
+export const PageProfile = lazyLoad(
   () => import('./index'),
   module => module.PageProfile,
 );
 
-export default PageProfile;
+export const PageUbahProfile = lazyLoad(
+  () => import('./ubahProfil'),
+  module => module.PageUbahProfile,
+);

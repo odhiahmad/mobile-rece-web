@@ -9,7 +9,6 @@ import InputNumber from 'app/components/atoms/input-number/loadable';
 import Select from 'app/components/atoms/select-bottom-sheet/loadable';
 import Button from 'app/components/atoms/button/loadable';
 import SuccessLogo from 'assets/img/success.png';
-import { rpMasking } from 'utils/number';
 import Styles from './styles';
 import { transfer } from 'services/transfer';
 
@@ -51,7 +50,7 @@ export function PageSaving() {
         Balance: values.nominal,
         IdUser: '23',
       });
-
+      setLayout(1);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -69,9 +68,6 @@ export function PageSaving() {
     },
   });
 
-  const pilihNominal = value => {
-    formik.setFieldValue('nominal', value);
-  };
   return (
     <>
       <Helmet>
@@ -178,10 +174,8 @@ export function PageSaving() {
                 </div>
                 <span className="text-info">
                   Saya setuju dengan{' '}
-                  <a className="color-main" href="">
-                    syarat dan ketentuan
-                  </a>{' '}
-                  yang berlaku
+                  <p className="color-main">syarat dan ketentuan</p> yang
+                  berlaku
                 </span>
               </div>
               <div className="withdraw_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
