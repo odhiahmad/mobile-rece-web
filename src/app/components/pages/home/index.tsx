@@ -15,7 +15,9 @@ import useRouter from 'app/components/hooks/router';
 import BottomBar from 'app/components/atoms/bottombar/loadable';
 import Skeleton from 'react-loading-skeleton';
 import { rpMasking } from 'utils/number';
-import { riwayat } from 'services/riwayat';
+import { wallet } from 'services/wallet';
+import { getToken } from 'utils/cookie';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 const dataRiwayat = [
   {
@@ -43,16 +45,30 @@ export function PageHome() {
   const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);
+  const [dataJwt, setDataJwt] = React.useState([]);
+  const [dataWallet, setDataWallet] = React.useState([]);
+
   React.useEffect(() => {
-    getRiwayat();
+    getIndex();
   }, []);
-  const getRiwayat = async () => {
+  const getIndex = async () => {
     try {
       setLoading(true);
-      await riwayat({
-        Id: '23',
+      const token = getToken();
+      const decoded = jwt_decode<JwtPayload>(token || '') || null;
+      const tempUser = decoded['account_id']['user'];
+      const tempUserRR = decoded['account_id'];
+      setDataJwt(tempUser);
+      const walletTemp = await wallet({
+        walletId: tempUserRR['Wallet']['wallet_id'],
       });
 
+      console.log(walletTemp);
+      setDataWallet(walletTemp['Data']);
+
+      // for (let i = walletTemp['Data']['wallet_history'].length; i > 0; i--) {
+      //   console.log(walletTemp['Data']['wallet_history'][i]);
+      // }
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -73,7 +89,7 @@ export function PageHome() {
                   <Skeleton height={10} />
                 ) : (
                   <span className="text-sub-title text-heavy mb-half">
-                    Halo Kurnia!
+                    {dataJwt['Name']}
                   </span>
                 )}
 
@@ -95,7 +111,7 @@ export function PageHome() {
                       <Skeleton height={20} />
                     ) : (
                       <span className="text-title text-heavy">
-                        Rp 5.750.0000
+                        {rpMasking(dataWallet['Balance'])}
                       </span>
                     )}
                   </div>
@@ -110,7 +126,7 @@ export function PageHome() {
                         0012 - 0812 - 3456 - 7890
                       </span>
                     )}
-                    <span className="text-info-small">Kurnia Ramadhani</span>
+                    <span className="text-info-small"> {dataJwt['Name']}</span>
                   </div>
                   <img
                     className="homepage_rece"
@@ -172,7 +188,7 @@ export function PageHome() {
               ))
             ) : (
               <div className="homepage_row-wrapper">
-                {dataRiwayat.map(opt => (
+                {/* {dataWallet['wallet_history'].map(opt => (
                   <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
                     <div className="flex-column">
                       <span className="text-info text-bold">Transfer RECE</span>
@@ -189,7 +205,7 @@ export function PageHome() {
                       </span>
                     </div>
                   </div>
-                ))}
+                ))} */}
               </div>
             )}
           </div>

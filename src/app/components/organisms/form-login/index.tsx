@@ -16,6 +16,7 @@ const loginSchema = Yup.object().shape({
 
 export function FormLogin() {
   const [loading, setLoading] = React.useState(false);
+
   const onSubmit = async values => {
     try {
       setLoading(true);
@@ -23,14 +24,16 @@ export function FormLogin() {
         username: values.username,
         password: values.password,
       });
-      const { data } = response;
-      setToken(data.Data);
+      // console.log(response);
+      // const { data } = response;
+      setToken(response.Data);
+      console.log(response.Data);
       window.location.reload();
       setLoading(false);
     } catch (error) {
       // [NOTE] DELETE WHEN FULLY INTEGRATE WITH API, FOR TESTING PURPOSE ONLY
       setToken('test');
-      window.location.reload();
+      // window.location.reload();
       setLoading(false);
     }
   };

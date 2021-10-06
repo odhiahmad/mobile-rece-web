@@ -7,22 +7,22 @@ import InputNumber from 'app/components/atoms/input-number/loadable';
 import Button from 'app/components/atoms/button/loadable';
 import DatePicker from 'app/components/atoms/datepicker/loadable';
 import userLogo from 'assets/img/login/user.png';
-import lockLogo from 'assets/img/login/lock.png';
+// import lockLogo from 'assets/img/login/lock.png';
 import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
 import calendarLogo from 'assets/img/calendar.png';
-import { registerUser } from 'services/user';
+import { editUser } from 'services/user.edit';
 import useRouter from 'app/components/hooks/router';
 // import dayjs from 'dayjs';
+import { getToken } from 'utils/cookie';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
   email: Yup.string()
     .email('Format email salah')
     .required('Email tidak boleh kosong'),
-  ktp: Yup.string()
-    .typeError('KTP tidak boleh kosong')
-    .required('KTP tidak boleh kosong'),
+
   phone: Yup.string()
     .typeError('Nomor handphone tidak boleh kosong')
     .required('Nomor handphone tidak boleh kosong'),
@@ -30,31 +30,32 @@ const loginSchema = Yup.object().shape({
   bank: Yup.string().required('Nomor rekening tidak boleh kosong'),
   birthplace: Yup.string().required('Tempat lahir tidak boleh kosong'),
   birthdate: Yup.string().required('Tanggal lahir tidak boleh kosong'),
-  password: Yup.string().required('Password tidak boleh kosong'),
-  confirmPassword: Yup.string().required(
-    'Konfirmasi password tidak boleh kosong',
-  ),
 });
 
 export function FormUbahProfile() {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+
+  const token = getToken();
+  const decoded = jwt_decode<JwtPayload>(token || '') || null;
+  const tempUser = decoded['account_id']['user'];
+  const tanggal = tempUser.BirthDate;
+
   const onSubmit = async values => {
     try {
       setLoading(true);
-      await registerUser({
+      await editUser({
+        ID: tempUser.ID,
         Name: values.name,
         Username: values.email,
-        Nik: values.ktp,
         PhoneNumber: values.phone,
         Email: values.email,
         BirthPlace: values.birthplace,
         BirthDate: values.birthdate,
         MotherName: values.mother,
         BankAccount: values.name,
-        Password: values.password,
       });
-      router.push(router.route.home);
+      router.push({ pathname: router.route.home });
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -63,26 +64,18 @@ export function FormUbahProfile() {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      ktp: '',
-      phone: '',
-      mother: '',
-      bank: '',
-      birthplace: '',
+      name: tempUser.Name,
+      username: tempUser.Username,
+      email: tempUser.Email,
+      phone: tempUser.PhoneNumber,
+      mother: tempUser.MotherName,
+      bank: tempUser.BankAccount,
+      birthplace: tempUser.BirthPlace,
       birthdate: '',
-      password: '',
-      confirmPassword: '',
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      if (values.password !== values.confirmPassword) {
-        formik.setErrors({
-          confirmPassword: 'Konfimasi password harus sama dengan password',
-        });
-      } else {
-        onSubmit(values);
-      }
+      onSubmit(values);
     },
   });
   return (
@@ -112,19 +105,7 @@ export function FormUbahProfile() {
           error={formik.errors.email !== undefined && formik.touched.email}
           errorMsg={formik.errors.email}
         />
-        <InputNumber
-          id="ktp-input"
-          name="ktp"
-          logo={ktpLogo}
-          colorScheme="grey"
-          masking="none"
-          placeholder="Nomor KTP"
-          value={formik.values.ktp}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.errors.ktp !== undefined && formik.touched.ktp}
-          errorMsg={formik.errors.ktp}
-        />
+
         <InputNumber
           id="phone-input"
           name="phone"
@@ -194,37 +175,6 @@ export function FormUbahProfile() {
           onBlur={formik.handleBlur}
           error={formik.errors.bank !== undefined && formik.touched.bank}
           errorMsg={formik.errors.bank}
-        />
-        <Input
-          id="password-input"
-          name="password"
-          logo={lockLogo}
-          type="password"
-          colorScheme="grey"
-          placeholder="Password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.password !== undefined && formik.touched.password
-          }
-          errorMsg={formik.errors.password}
-        />
-        <Input
-          id="confirm-password-input"
-          name="confirmPassword"
-          logo={lockLogo}
-          type="password"
-          colorScheme="grey"
-          placeholder="Confirm Password"
-          value={formik.values.confirmPassword}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.confirmPassword !== undefined &&
-            formik.touched.confirmPassword
-          }
-          errorMsg={formik.errors.confirmPassword}
         />
       </div>
       <Button

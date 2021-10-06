@@ -40,14 +40,14 @@ export function setUpAxios() {
 
 export default function Axios(config: AxiosRequestConfig) {
   // DEFINE BASE URL BASED ON SERVICE
-  const baseURL = 'http://6ea1-182-253-245-254.ngrok.io';
+  const baseURL = 'https://d552-182-253-34-181.ngrok.io';
   // INIT HEADER
   const headers = {
     ...initialHeader,
   };
   // APPEND TOKEN
   const token = getToken();
-  headers.Authorization = `${token}`;
+  headers.Authorization = `Bearer ${token}`;
   // FINAL INTERCEPTOR CONFIG
   const finalConfig = {
     baseURL,

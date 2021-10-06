@@ -1,8 +1,8 @@
 import axios from './index';
 
 export interface ICreateUser {
-  Balance: number;
-  Sumber: string;
+  Amount: number;
+  UserMerchantId: string;
   IdUser: string;
 }
 
@@ -11,7 +11,7 @@ export const saving = async (payload: ICreateUser) => {
   try {
     const response = await axios({
       url: '/wallet/topup/' + payload.IdUser,
-      method: 'POST',
+      method: 'PUT',
       data: payload,
     });
 

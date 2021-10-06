@@ -4,13 +4,55 @@ import { Helmet } from 'react-helmet-async';
 import Button from 'app/components/atoms/button/loadable';
 import Styles from './styles';
 import { H1Main } from 'styles/texts';
+import { otpKonfirmasi } from 'services/otp';
+import cookies from 'js-cookie';
+import useRouter from 'app/components/hooks/router';
 
-export function PageOtp() {
+export const PageOtp = props => {
+  const router = useRouter();
+
+  const id = cookies.get('userId');
+  const email = cookies.get('email');
   const [otp, setOtp] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(0);
+
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const onTriggerCursor = () => {
     inputRef.current.focus();
   };
+
+  const onSubmit = async () => {
+    if (otp[5] !== undefined) {
+      try {
+        setLoading(true);
+        let kodeOtp = '';
+        for (let i = 0; i < 6; i++) {
+          kodeOtp += otp[i];
+        }
+        setLoading(true);
+        const dataOtp = await otpKonfirmasi({
+          UserId: id,
+          OtpCode: kodeOtp,
+        });
+        console.log(dataOtp.errorId === 401);
+
+        if (dataOtp.errorId === 401) {
+          setSuccess(2);
+        } else {
+          setSuccess(1);
+          router.push({ pathname: router.route.home });
+        }
+
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    } else {
+      console.log('belum');
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -22,8 +64,8 @@ export function PageOtp() {
           <div className="page-otp_top pb-2">
             <H1Main>Verifikasi</H1Main>
             <span>
-              Kami telah mengirimkan kode verifikasi ke nomor{' '}
-              <span className="text-heavy">+62812-3456-7890</span>
+              Kami telah mengirimkan kode verifikasi ke email{' '}
+              <span className="text-heavy">{email}</span>
             </span>
           </div>
           <div className="page-otp_input-wrapper flex-column flex-v-center flex-h-center">
@@ -46,7 +88,12 @@ export function PageOtp() {
             />
           </div>
           <div className="page-otp_action mt-2 mb-1-half">
-            <Button id="otp-submit" className="w-100">
+            <Button
+              loading={loading}
+              id="otp-submit"
+              onClick={onSubmit}
+              className="w-100"
+            >
               Verifikasi
             </Button>
           </div>
@@ -55,8 +102,11 @@ export function PageOtp() {
             <span className="color-black30 pointer">Kirim Ulang </span>
             <span className="color-main pointer">(59)</span>
           </div>
+          <div className="text-info">
+            {success === 2 ? <span>Kode yang anda masukan salah </span> : <></>}
+          </div>
         </div>
       </Styles>
     </>
   );
-}
+};

@@ -1,21 +1,22 @@
 import axios from './index';
 
-export interface ICreateUser {
+export interface IEditUser {
   ID: string;
   Name: string;
+  Username: string;
   PhoneNumber: number;
   Email: string;
   BirthPlace: string;
-  BirthDate: string; // YYYY-MM-DD
+  BirthDate: string;
   MotherName: string;
   BankAccount: number;
 }
 
-export const editUser = async (payload: ICreateUser) => {
+export const editUser = async (payload: IEditUser) => {
   try {
     const response = await axios({
       url: '/users/edit',
-      method: 'POST',
+      method: 'PUT',
       data: payload,
     });
 

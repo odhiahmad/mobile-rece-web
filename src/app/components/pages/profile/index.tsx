@@ -11,12 +11,34 @@ import ChevronLogo from 'assets/img/right-chevron.png';
 import Styles from './styles';
 import { Link } from 'react-router-dom';
 import { removeToken } from 'utils/cookie';
-
+import { getToken } from 'utils/cookie';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
+import useRouter from 'app/components/hooks/router';
 // import Button from 'app/components/atoms/button/loadable';
 
 export function PageProfile() {
+  const router = useRouter();
+
+  console.log(router);
   const body = document.body;
   body.style.backgroundColor = colors.black20;
+
+  const [dataJwt, setDataJwt] = React.useState([]);
+
+  React.useEffect(() => {
+    getIndex();
+  }, []);
+  const getIndex = () => {
+    try {
+      const token = getToken();
+      const decoded = jwt_decode<JwtPayload>(token || '') || null;
+      const tempUser = decoded['account_id']['user'];
+
+      setDataJwt(tempUser);
+      console.log(tempUser);
+    } catch (error) {}
+  };
+
   return (
     <>
       <Helmet>
@@ -33,12 +55,23 @@ export function PageProfile() {
                 <img src={SuccessLogo} alt="User Logo" />
               </div>
               <span className="text-info text-heavy color-main pointer">
-                <Link to="profile-ubah">Ubah Profil</Link>
+                <span
+                  onClick={() => {
+                    router.push({
+                      pathname: '/profile-ubah',
+                      state: {
+                        dataJwtTemp: dataJwt,
+                      },
+                    });
+                  }}
+                >
+                  Ubah Profil
+                </span>
               </span>
               <span className="text-sub-title text-heavy mt-1-half">
-                Kurnia Ramadani
+                {dataJwt['Name']}
               </span>
-              <span className="text-info">+62812-3456-7890</span>
+              <span className="text-info">+{dataJwt['PhoneNumber']}</span>
             </div>
           </div>
           <div className="profile_menu bg-color-white100 mb-1 pl-1-half pr-1-half">

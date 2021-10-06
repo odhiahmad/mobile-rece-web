@@ -1,16 +1,16 @@
 import axios from './index';
 
 export interface ICreateUser {
-  Balance: number;
-
+  Amount: number;
   IdUser: string;
+  UserMerchantId: string;
 }
 
 export const transfer = async (payload: ICreateUser) => {
   try {
     const response = await axios({
       url: '/wallet/withdraw/' + payload.IdUser,
-      method: 'POST',
+      method: 'PUT',
       data: payload,
     });
 

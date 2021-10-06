@@ -12,8 +12,9 @@ import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
 import calendarLogo from 'assets/img/calendar.png';
 import { registerUser } from 'services/user';
-import useRouter from 'app/components/hooks/router';
-// import dayjs from 'dayjs';
+
+import cookies from 'js-cookie';
+import { useHistory } from 'react-router-dom';
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
@@ -38,15 +39,16 @@ const loginSchema = Yup.object().shape({
 
 export function FormRegister() {
   const [loading, setLoading] = React.useState(false);
-  const router = useRouter();
+
+  const history = useHistory();
   const onSubmit = async values => {
     try {
       setLoading(true);
-      await registerUser({
+      const response = await registerUser({
         Name: values.name,
         Username: values.email,
         Nik: values.ktp,
-        PhoneNumber: values.phone,
+        PhoneNumber: parseInt(values.phone),
         Email: values.email,
         BirthPlace: values.birthplace,
         BirthDate: values.birthdate,
@@ -54,7 +56,16 @@ export function FormRegister() {
         BankAccount: values.name,
         Password: values.password,
       });
-      router.push(router.route.home);
+
+      history.push({
+        pathname: '/otp',
+        state: {
+          email: values.email,
+        },
+      });
+      cookies.set('email', response.Data.Email);
+      cookies.set('userId', response.Data.ID);
+
       setLoading(false);
     } catch (error) {
       setLoading(false);

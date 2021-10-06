@@ -49,8 +49,7 @@ export function InputNumber({
     },
     [masking],
   );
-  const valueProps =
-    value !== null ? { value: value === '' ? '' : renderValue(value) } : {};
+  const valueProps = value !== null ? { value: value === '' ? '' : value } : {};
   return (
     <>
       <Input

@@ -12,18 +12,24 @@ const route = {
   saving: '/saving',
 };
 
+type PropsRouter = {
+  pathname: string;
+  search?: string;
+  state?: Object;
+};
+
 const useRouter = () => {
   const history = useHistory();
+  const backAgain = () => history.goBack();
   // PUSH
-  const push = (pathname: string) => {
-    history.push({
-      pathname,
-    });
+  const push = (prop: PropsRouter) => {
+    history.push(prop);
   };
   // REPLACE
   return {
     push,
     route,
+    backAgain,
   };
 };
 

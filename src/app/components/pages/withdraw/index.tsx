@@ -7,11 +7,13 @@ import { colors } from 'styles/variables';
 import TopBar from 'app/components/atoms/topbar/loadable';
 import InputNumber from 'app/components/atoms/input-number/loadable';
 import Button from 'app/components/atoms/button/loadable';
+import Select from 'app/components/atoms/select-bottom-sheet/loadable';
 import SuccessLogo from 'assets/img/success.png';
 import { rpMasking } from 'utils/number';
 import Styles from './styles';
 import { transfer } from 'services/transfer';
-
+import { getToken } from 'utils/cookie';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 const loginSchema = Yup.object().shape({
   nominal: Yup.string().required('Nominal tidak boleh kosong'),
 });
@@ -51,24 +53,69 @@ const withdrawOptions = [
   },
 ];
 
+const options = [
+  {
+    label: 'Dana',
+    value: 'c5f0978f-cf06-4aa9-940e-837e7d5eb1cc',
+  },
+  {
+    label: 'Gopay',
+    value: '78727daf-876c-4fee-a758-e96dacff5307',
+  },
+  {
+    label: 'Link Aja',
+    value: 'f9109271-c0c9-47bd-98a5-ba8d02f9c54a',
+  },
+  {
+    label: 'Alfamart',
+    value: 'db92eb1b-6304-4a91-b1f4-4522815145ce',
+  },
+];
+
 export function PageWithdraw() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
 
   const [loading, setLoading] = React.useState(false);
   const [layout, setLayout] = React.useState(0);
+  const [dataJwt, setDataJwt] = React.useState([]);
+  const [dataRes, setDataRes] = React.useState([]);
+
+  React.useEffect(() => {
+    getIndex();
+  }, []);
+  const getIndex = () => {
+    try {
+      setLoading(true);
+      const token = getToken();
+      const decoded = jwt_decode<JwtPayload>(token || '') || null;
+      const tempUser = decoded['account_id']['Wallet'];
+
+      setDataJwt(tempUser);
+      console.log(tempUser);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
 
   const onSubmit = async values => {
     console.log(values.nominal);
     try {
       setLoading(true);
-      await transfer({
-        Balance: values.nominal,
-        IdUser: '23',
+      const dataResTemp = await transfer({
+        Amount: parseInt(values.nominal),
+        IdUser: dataJwt['wallet_id'],
+        UserMerchantId: values.fundSource,
       });
 
+      setDataRes(dataResTemp);
+
+      if (dataResTemp.status === 200) {
+        setLayout(1);
+      }
+      console.log(dataRes);
       setLoading(false);
-      setLayout(1);
     } catch (error) {
       setLoading(false);
     }
@@ -77,6 +124,7 @@ export function PageWithdraw() {
   const formik = useFormik({
     initialValues: {
       nominal: '',
+      fundSource: '',
     },
     validationSchema: loginSchema,
     onSubmit: values => {
@@ -128,7 +176,21 @@ export function PageWithdraw() {
                     }
                     errorMsg={formik.errors.nominal}
                   />
-                  <div className="flex flex-h-space flex-wrap">
+                  <Select
+                    id="saving-fund-source"
+                    name="fundSource"
+                    label="Sumber Dana"
+                    options={options}
+                    value={formik.values.fundSource}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.fundSource !== undefined &&
+                      formik.touched.fundSource
+                    }
+                    errorMsg={formik.errors.fundSource}
+                  />
+                  {/* <div className="flex flex-h-space flex-wrap">
                     {withdrawOptions.map(opt => (
                       <div
                         onClick={() => pilihNominal(opt.label)}
@@ -138,7 +200,7 @@ export function PageWithdraw() {
                         {rpMasking(opt.label)}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   <div>
                     <span className="text-info">
@@ -170,7 +232,9 @@ export function PageWithdraw() {
                 </div>
                 <div className="text-center flex-column">
                   <span className="text-sub-title mb-1">Kode Transaksi:</span>
-                  <span className="text-jumbotron text-heavy mb-1">300897</span>
+                  <span className="text-jumbotron text-heavy mb-1">
+                    {dataRes['Data']['CodeTransaction']}
+                  </span>
                   <span className="color-main text-info text-heavy pointer">
                     Salin Kode
                   </span>
@@ -185,16 +249,16 @@ export function PageWithdraw() {
                 <div className="text-info pb-1 main-border-bottom">
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Jumlah Nabung</span>
-                    <span>Rp50.000</span>
+                    <span>{rpMasking(dataRes['Data']['Amount'])}</span>
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Biaya Admin</span>
-                    <span>Rp0</span>
+                    <span>{rpMasking(dataRes['Data']['AdminFee'])}</span>
                   </div>
                 </div>
                 <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
                   <span>Total</span>
-                  <span>Rp50.000</span>
+                  <span>{rpMasking(dataRes['Data']['Total'])}</span>
                 </div>
               </div>
               <div className="withdraw_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">

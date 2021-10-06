@@ -3,13 +3,29 @@ import { Helmet } from 'react-helmet-async';
 import { colors } from 'styles/variables';
 import TopBar from 'app/components/atoms/topbar/loadable';
 import SuccessLogo from 'assets/img/success.png';
-
+import { getToken } from 'utils/cookie';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import Styles from './styles';
 import FormUbahProfile from 'app/components/organisms/form-ubah-profile/loadable';
 
-export function PageUbahProfile() {
+export const PageUbahProfile = props => {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
+
+  const [dataJwt, setDataJwt] = React.useState([]);
+
+  React.useEffect(() => {
+    getIndex();
+  }, []);
+  const getIndex = () => {
+    try {
+      const token = getToken();
+      const decoded = jwt_decode<JwtPayload>(token || '') || null;
+      const tempUser = decoded['account_id']['user'];
+
+      setDataJwt(tempUser);
+    } catch (error) {}
+  };
   return (
     <>
       <Helmet>
@@ -29,9 +45,9 @@ export function PageUbahProfile() {
               </div>
               <span className="text-info text-heavy color-main pointer"></span>
               <span className="text-sub-title text-heavy mt-1-half">
-                Kurnia Ramadani
+                {dataJwt['Name']}
               </span>
-              <span className="text-info">+62812-3456-7890</span>
+              <span className="text-info">+{dataJwt['PhoneNumber']}</span>
             </div>
           </div>
           <div className="profile_display-card flex-column mb-1">
@@ -43,4 +59,4 @@ export function PageUbahProfile() {
       </Styles>
     </>
   );
-}
+};

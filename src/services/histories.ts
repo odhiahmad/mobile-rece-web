@@ -1,13 +1,14 @@
 import axios from './index';
 
-export interface Riwayat {
-  Id: string;
+export interface Histories {
+  page: number;
+  size: number;
 }
 
-export const riwayat = async (payload: Riwayat) => {
+export const histories = async (payload: Histories) => {
   try {
     const response = await axios({
-      url: '/account/login' + payload.Id,
+      url: '/histories',
       method: 'GET',
     });
 
