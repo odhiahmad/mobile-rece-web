@@ -40,7 +40,7 @@ export function setUpAxios() {
 
 export default function Axios(config: AxiosRequestConfig) {
   // DEFINE BASE URL BASED ON SERVICE
-  const baseURL = 'https://d5d3-182-253-34-181.ngrok.io';
+  const baseURL = 'https://rece-app.herokuapp.com';
   // INIT HEADER
   const headers = {
     ...initialHeader,

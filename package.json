@@ -45,6 +45,7 @@
     "js-cookie": "3.0.1",
     "jwt-decode": "3.1.2",
     "lint-staged": "10.3.0",
+    "moment": "2.29.1",
     "node-plop": "0.26.2",
     "plop": "2.7.4",
     "prettier": "2.3.2",
@@ -79,7 +80,7 @@
     "yup": "0.32.9"
   },
   "scripts": {
-     "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

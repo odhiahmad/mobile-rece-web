@@ -16,8 +16,12 @@ import BottomBar from 'app/components/atoms/bottombar/loadable';
 import Skeleton from 'react-loading-skeleton';
 import { rpMasking } from 'utils/number';
 import { wallet } from 'services/wallet';
+import { histories } from 'services/histories';
 import { getToken } from 'utils/cookie';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
+import moment from 'moment';
+
+require('moment/locale/id.js');
 
 const dataRiwayat = [
   {
@@ -47,6 +51,7 @@ export function PageHome() {
   const [loading, setLoading] = React.useState(false);
   const [dataJwt, setDataJwt] = React.useState([]);
   const [dataWallet, setDataWallet] = React.useState([]);
+  const [dataWalletHistory, setDataWalletHistory] = React.useState([]);
 
   React.useEffect(() => {
     getIndex();
@@ -63,8 +68,13 @@ export function PageHome() {
         walletId: tempUserRR['Wallet']['wallet_id'],
       });
 
-      console.log(walletTemp);
+      const walletHistoriesTemp = await histories({
+        walletId: tempUserRR['Wallet']['wallet_id'],
+      });
+
+      console.log(walletHistoriesTemp['Data']);
       setDataWallet(walletTemp['Data']);
+      setDataWalletHistory(walletHistoriesTemp['Data']);
 
       // for (let i = walletTemp['Data']['wallet_history'].length; i > 0; i--) {
       //   console.log(walletTemp['Data']['wallet_history'][i]);
@@ -188,24 +198,28 @@ export function PageHome() {
               ))
             ) : (
               <div className="homepage_row-wrapper">
-                {/* {dataWallet['wallet_history'].map(opt => (
+                {dataWalletHistory.map(opt => (
                   <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
                     <div className="flex-column">
-                      <span className="text-info text-bold">Transfer RECE</span>
+                      <span className="text-info text-bold">
+                        {opt['TypeTransaction']} RECE
+                      </span>
                       <span className="text-info-small text-thin">
                         Melalui Tokopedia
                       </span>
                     </div>
                     <div className="flex-column">
                       <span className="text-info text-bold color-main text-end">
-                        {rpMasking(opt.nominal)}
+                        {rpMasking(opt['Amount'])}
                       </span>
                       <span className="text-info-small text-thin text-end">
-                        Hari ini, {opt.waktu}
+                        {moment(opt['TransactionDate'])
+                          .startOf('day')
+                          .fromNow()}
                       </span>
                     </div>
                   </div>
-                ))} */}
+                ))}
               </div>
             )}
           </div>

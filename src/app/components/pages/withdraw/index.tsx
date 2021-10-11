@@ -11,9 +11,13 @@ import Select from 'app/components/atoms/select-bottom-sheet/loadable';
 import SuccessLogo from 'assets/img/success.png';
 import { rpMasking } from 'utils/number';
 import Styles from './styles';
-import { transfer } from 'services/transfer';
+import { withdraw } from 'services/withdraw';
 import { getToken } from 'utils/cookie';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { wallet } from 'services/wallet';
+import Skeleton from 'react-loading-skeleton';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import useRouter from 'app/components/hooks/router';
 const loginSchema = Yup.object().shape({
   nominal: Yup.string().required('Nominal tidak boleh kosong'),
 });
@@ -75,60 +79,76 @@ const options = [
 export function PageWithdraw() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;
+  const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);
   const [layout, setLayout] = React.useState(0);
   const [dataJwt, setDataJwt] = React.useState([]);
   const [dataRes, setDataRes] = React.useState([]);
-
+  const [dataUser, setDataUser] = React.useState([]);
+  const [loadingSkel, setLoadingSkel] = React.useState(false);
+  const [balance, setBalance] = React.useState(0);
+  const [errorMessage, setErrorMessage] = React.useState('');
   React.useEffect(() => {
     getIndex();
   }, []);
-  const getIndex = () => {
+  const getIndex = async () => {
     try {
-      setLoading(true);
+      setLoadingSkel(true);
       const token = getToken();
       const decoded = jwt_decode<JwtPayload>(token || '') || null;
-      const tempUser = decoded['account_id']['Wallet'];
+      const tempWallet = decoded['account_id']['Wallet'];
+      const tempUser = decoded['account_id']['user'];
+      const walletTemp = await wallet({
+        walletId: tempWallet['wallet_id'],
+      });
+      setBalance(walletTemp['Data']['Balance']);
 
-      setDataJwt(tempUser);
-      console.log(tempUser);
+      setDataJwt(tempWallet);
+      setDataUser(tempUser);
+      setLoadingSkel(false);
+    } catch (error) {
+      setLoadingSkel(false);
+    }
+  };
+
+  const onSubmit = async values => {
+    try {
+      setLoading(true);
+      const dataResTemp = await withdraw({
+        Amount: parseInt(values.nominal),
+        IdUser: dataJwt['wallet_id'],
+        PhoneNumber: dataUser['PhoneNumber'],
+      });
+
+      setDataRes(dataResTemp);
+      if (dataResTemp.status === 200) {
+        setLayout(2);
+      } else if (dataResTemp.status === 404) {
+        setLayout(1);
+      }
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  const onSubmit = async values => {
-    console.log(values.nominal);
-    try {
-      setLoading(true);
-      const dataResTemp = await transfer({
-        Amount: parseInt(values.nominal),
-        IdUser: dataJwt['wallet_id'],
-        UserMerchantId: values.fundSource,
-      });
-
-      setDataRes(dataResTemp);
-
-      if (dataResTemp.status === 200) {
-        setLayout(1);
-      }
-      console.log(dataRes);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+  const onNext = () => {
+    setLayout(1);
   };
 
   const formik = useFormik({
     initialValues: {
       nominal: '',
-      fundSource: '',
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      onSubmit(values);
+      if (layout === 0) {
+        onNext();
+      } else if (layout === 1) {
+        onSubmit(values);
+      }
     },
   });
 
@@ -158,13 +178,22 @@ export function PageWithdraw() {
                 <div className="mb-1">
                   <span className="text-info text-thin">
                     Saldo RECE mu{' '}
-                    <span className="color-main text-bold">Rp5.000.000</span>
+                    {loadingSkel === true ? (
+                      <span className="color-main text-bold">
+                        <Skeleton height={10} />
+                      </span>
+                    ) : (
+                      <span className="color-main text-bold">
+                        {rpMasking(balance)}
+                      </span>
+                    )}
                   </span>
                 </div>
                 <form onSubmit={formik.handleSubmit}>
                   <InputNumber
                     id="withdraw-nominal"
                     name="nominal"
+                    masking="none"
                     label="Nominal"
                     placeholder="Nominal"
                     value={formik.values.nominal}
@@ -176,21 +205,7 @@ export function PageWithdraw() {
                     }
                     errorMsg={formik.errors.nominal}
                   />
-                  <Select
-                    id="saving-fund-source"
-                    name="fundSource"
-                    label="Sumber Dana"
-                    options={options}
-                    value={formik.values.fundSource}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.errors.fundSource !== undefined &&
-                      formik.touched.fundSource
-                    }
-                    errorMsg={formik.errors.fundSource}
-                  />
-                  {/* <div className="flex flex-h-space flex-wrap">
+                  <div className="flex flex-h-space flex-wrap">
                     {withdrawOptions.map(opt => (
                       <div
                         onClick={() => pilihNominal(opt.label)}
@@ -200,7 +215,7 @@ export function PageWithdraw() {
                         {rpMasking(opt.label)}
                       </div>
                     ))}
-                  </div> */}
+                  </div>
 
                   <div>
                     <span className="text-info">
@@ -224,6 +239,77 @@ export function PageWithdraw() {
                 </form>
               </div>
             </div>
+          ) : layout === 1 ? (
+            <div>
+              <form onSubmit={formik.handleSubmit}>
+                <div className="withdraw_transaction-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+                  <div className="mb-1-half">
+                    <span className="text-sub-title text-heavy mb-half">
+                      Detail Transaksi
+                    </span>
+                  </div>
+                  <InputNumber
+                    id="withdraw-nominal"
+                    name="nominal"
+                    masking="none"
+                    label="Nominal"
+                    placeholder="Nominal"
+                    value={formik.values.nominal}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.nominal !== undefined &&
+                      formik.touched.nominal
+                    }
+                    errorMsg={formik.errors.nominal}
+                  />
+
+                  <div className="text-info pb-1 main-border-bottom">
+                    <div className="flex flex-v-center flex-h-space pt-half pb-half">
+                      <span>Jumlah Nabung</span>
+                      <span>{rpMasking(formik.values.nominal)}</span>
+                    </div>
+                    <div className="flex flex-v-center flex-h-space pt-half pb-half">
+                      <span>Biaya Admin</span>
+                      <span>Rp 2.500</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
+                    <span>Total</span>
+                    <span>
+                      {rpMasking(parseInt(formik.values.nominal) + 2500)}
+                    </span>
+                  </div>
+                </div>
+                <div className="withdraw_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+                  <div className="checkbox mr-1">
+                    <label>
+                      <input type="checkbox" />
+                      <span className="checkbox-material">
+                        <span className="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <span className="text-info">
+                    Saya setuju dengan{' '}
+                    <a className="color-main" href="">
+                      syarat dan ketentuan
+                    </a>{' '}
+                    yang berlaku
+                  </span>
+                </div>
+                <div className="withdraw_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
+                  <Button
+                    id="confirm-saving-button"
+                    className="w-100"
+                    type="submit"
+                    loading={loading}
+                  >
+                    Konfirmasi
+                  </Button>
+                </div>
+              </form>
+            </div>
           ) : (
             <div>
               <div className="withdraw_success-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
@@ -235,9 +321,19 @@ export function PageWithdraw() {
                   <span className="text-jumbotron text-heavy mb-1">
                     {dataRes['Data']['CodeTransaction']}
                   </span>
-                  <span className="color-main text-info text-heavy pointer">
-                    Salin Kode
-                  </span>
+                  <CopyToClipboard
+                    text={dataRes['Data']['CodeTransaction']}
+                    onCopy={() => {}}
+                    options={{
+                      debug: true,
+                      message: 'message',
+                      format: 'text/plain',
+                    }}
+                  >
+                    <span className="color-main text-info text-heavy pointer">
+                      Salin Kode
+                    </span>
+                  </CopyToClipboard>
                 </div>
               </div>
               <div className="withdraw_transaction-card bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
@@ -249,42 +345,34 @@ export function PageWithdraw() {
                 <div className="text-info pb-1 main-border-bottom">
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Jumlah Nabung</span>
-                    <span>{rpMasking(dataRes['Data']['Amount'])}</span>
+                    <span>{rpMasking(formik.values.nominal)}</span>
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Biaya Admin</span>
-                    <span>{rpMasking(dataRes['Data']['AdminFee'])}</span>
+                    <span>Rp0</span>
                   </div>
                 </div>
                 <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
                   <span>Total</span>
-                  <span>{rpMasking(dataRes['Data']['Total'])}</span>
+                  <span>{rpMasking(formik.values.nominal)}</span>
                 </div>
               </div>
-              <div className="withdraw_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
-                <div className="checkbox mr-1">
-                  <label>
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span className="check"></span>
-                    </span>
-                  </label>
-                </div>
-                <span className="text-info">
-                  Saya setuju dengan{' '}
-                  <a className="color-main" href="">
-                    syarat dan ketentuan
-                  </a>{' '}
-                  yang berlaku
-                </span>
-              </div>
+
               <div className="withdraw_confirmatioin bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
                 <Button
+                  onClick={() => {
+                    router.push({
+                      pathname: '/',
+                      state: {
+                        dataJwtTemp: dataJwt,
+                      },
+                    });
+                  }}
                   id="confirm-saving-button"
                   className="w-100"
                   type="button"
                 >
-                  Konfirmasi
+                  Selesai
                 </Button>
               </div>
             </div>

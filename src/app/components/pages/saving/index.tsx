@@ -24,19 +24,23 @@ const loginSchema = Yup.object().shape({
 const options = [
   {
     label: 'Dana',
-    value: 'c5f0978f-cf06-4aa9-940e-837e7d5eb1cc',
+    value: '5715a88c-82ee-4f95-8e70-5434a2ee2bb1 ',
   },
   {
     label: 'Gopay',
-    value: '78727daf-876c-4fee-a758-e96dacff5307',
+    value: '3baecaeb-1fa1-4d79-8eac-c22f3418f6ed',
   },
   {
     label: 'Link Aja',
-    value: 'f9109271-c0c9-47bd-98a5-ba8d02f9c54a',
+    value: 'f50a20f9-1b51-4013-8a34-ccd2b1055885',
   },
   {
     label: 'Alfamart',
     value: 'db92eb1b-6304-4a91-b1f4-4522815145ce',
+  },
+  {
+    label: 'Ovo',
+    value: '2aff3127-b59d-4823-a644-74a1e1e0127b',
   },
 ];
 
@@ -134,6 +138,7 @@ export function PageSaving() {
                     id="saving-nominal"
                     name="nominal"
                     label="Nominal"
+                    masking="none"
                     colorScheme="grey"
                     placeholder="Nominal"
                     value={formik.values.nominal}

@@ -53,7 +53,7 @@ export function FormRegister() {
         BirthPlace: values.birthplace,
         BirthDate: values.birthdate,
         MotherName: values.mother,
-        BankAccount: values.name,
+        BankAccount: 34343,
         Password: values.password,
       });
 
@@ -79,7 +79,6 @@ export function FormRegister() {
       ktp: '',
       phone: '',
       mother: '',
-      bank: '',
       birthplace: '',
       birthdate: '',
       password: '',
@@ -193,19 +192,7 @@ export function FormRegister() {
           error={formik.errors.mother !== undefined && formik.touched.mother}
           errorMsg={formik.errors.mother}
         />
-        <InputNumber
-          id="bank-input"
-          name="bank"
-          logo={ktpLogo}
-          colorScheme="grey"
-          masking="none"
-          placeholder="Nomor Rekening Bank"
-          value={formik.values.bank}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.errors.bank !== undefined && formik.touched.bank}
-          errorMsg={formik.errors.bank}
-        />
+
         <Input
           id="password-input"
           name="password"

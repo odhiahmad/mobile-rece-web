@@ -1,14 +1,13 @@
 import axios from './index';
 
 export interface Histories {
-  page: number;
-  size: number;
+  walletId: string;
 }
 
 export const histories = async (payload: Histories) => {
   try {
     const response = await axios({
-      url: '/histories',
+      url: `histories?page=1&size=5&wallet=${payload.walletId}`,
       method: 'GET',
     });
 
