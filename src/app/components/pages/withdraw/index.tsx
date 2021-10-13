@@ -18,6 +18,9 @@ import { wallet } from 'services/wallet';
 import Skeleton from 'react-loading-skeleton';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import useRouter from 'app/components/hooks/router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const loginSchema = Yup.object().shape({
   nominal: Yup.string().required('Nominal tidak boleh kosong'),
 });
@@ -124,8 +127,28 @@ export function PageWithdraw() {
       setDataRes(dataResTemp);
       if (dataResTemp.status === 200) {
         setLayout(2);
-      } else if (dataResTemp.status === 404) {
+        toast.success('Transaksi Berhasil', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+
+      if (dataResTemp.errorId === 404) {
         setLayout(1);
+        toast.error(dataResTemp.message, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
 
       setLoading(false);
@@ -162,8 +185,20 @@ export function PageWithdraw() {
         <meta name="description" content="Halaman tarik dana RECE" />
       </Helmet>
       <TopBar />
+
       <Styles>
         <div className="withdraw screen">
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           {layout === 0 ? (
             <div className="withdraw_input-card flex-column mb-1">
               <div className="bg-color-white100 flex-column pt-2 pl-1-half pr-1-half">

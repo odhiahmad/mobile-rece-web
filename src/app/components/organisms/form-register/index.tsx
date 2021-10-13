@@ -28,7 +28,7 @@ const loginSchema = Yup.object().shape({
     .typeError('Nomor handphone tidak boleh kosong')
     .required('Nomor handphone tidak boleh kosong'),
   mother: Yup.string().required('Nama ibu kandung tidak boleh kosong'),
-  bank: Yup.string().required('Nomor rekening tidak boleh kosong'),
+
   birthplace: Yup.string().required('Tempat lahir tidak boleh kosong'),
   birthdate: Yup.string().required('Tanggal lahir tidak boleh kosong'),
   password: Yup.string().required('Password tidak boleh kosong'),
@@ -53,8 +53,8 @@ export function FormRegister() {
         BirthPlace: values.birthplace,
         BirthDate: values.birthdate,
         MotherName: values.mother,
-        BankAccount: 34343,
         Password: values.password,
+        BankAccount: 32432423,
       });
 
       history.push({
@@ -192,7 +192,6 @@ export function FormRegister() {
           error={formik.errors.mother !== undefined && formik.touched.mother}
           errorMsg={formik.errors.mother}
         />
-
         <Input
           id="password-input"
           name="password"
