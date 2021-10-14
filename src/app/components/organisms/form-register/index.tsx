@@ -5,16 +5,19 @@ import * as Yup from 'yup';
 import Input from 'app/components/atoms/input/loadable';
 import InputNumber from 'app/components/atoms/input-number/loadable';
 import Button from 'app/components/atoms/button/loadable';
-import DatePicker from 'app/components/atoms/datepicker/loadable';
 import userLogo from 'assets/img/login/user.png';
 import lockLogo from 'assets/img/login/lock.png';
 import ktpLogo from 'assets/img/id-card.png';
 import phoneLogo from 'assets/img/phone.png';
 import calendarLogo from 'assets/img/calendar.png';
 import { registerUser } from 'services/user';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const loginSchema = Yup.object().shape({
   name: Yup.string().required('Nama tidak boleh kosong'),
@@ -25,12 +28,10 @@ const loginSchema = Yup.object().shape({
     .typeError('KTP tidak boleh kosong')
     .required('KTP tidak boleh kosong'),
   phone: Yup.string()
+    .matches(phoneRegExp, 'Nomor handphone tidak valid')
     .typeError('Nomor handphone tidak boleh kosong')
     .required('Nomor handphone tidak boleh kosong'),
   mother: Yup.string().required('Nama ibu kandung tidak boleh kosong'),
-
-  birthplace: Yup.string().required('Tempat lahir tidak boleh kosong'),
-  birthdate: Yup.string().required('Tanggal lahir tidak boleh kosong'),
   password: Yup.string().required('Password tidak boleh kosong'),
   confirmPassword: Yup.string().required(
     'Konfirmasi password tidak boleh kosong',
@@ -39,7 +40,7 @@ const loginSchema = Yup.object().shape({
 
 export function FormRegister() {
   const [loading, setLoading] = React.useState(false);
-
+  const [berhasil, setBerhasil] = React.useState(0);
   const history = useHistory();
   const onSubmit = async values => {
     try {
@@ -50,19 +51,35 @@ export function FormRegister() {
         Nik: values.ktp,
         PhoneNumber: parseInt(values.phone),
         Email: values.email,
-        BirthPlace: 'Tes',
-        BirthDate: '2020-02-21',
+        BirthPlace: 'Padang',
+        BirthDate: '2020-02-02',
         MotherName: values.mother,
         Password: values.password,
         BankAccount: 32432423,
       });
 
-      history.push({
-        pathname: '/otp',
-        state: {
-          email: values.email,
-        },
-      });
+      if (response.status === 201) {
+        toast.error(
+          'Email sudah pernah digunakan, silahkan gunakan email lain',
+          {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
+      } else {
+        history.push({
+          pathname: '/otp',
+          state: {
+            email: values.email,
+          },
+        });
+      }
+
       cookies.set('email', response.Data.Email);
       cookies.set('userId', response.Data.ID);
 
@@ -77,9 +94,8 @@ export function FormRegister() {
       name: '',
       email: '',
       ktp: '',
-      phone: '',
+      phone: '62',
       mother: '',
-
       password: '',
       confirmPassword: '',
     },
@@ -96,6 +112,18 @@ export function FormRegister() {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
+      {}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="mb-3">
         <Input
           id="name-input"
@@ -140,45 +168,14 @@ export function FormRegister() {
           logo={phoneLogo}
           colorScheme="grey"
           masking="none"
-          placeholder="Nomor HP"
+          placeholder="Gunakan (62)"
           value={formik.values.phone}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.errors.phone !== undefined && formik.touched.phone}
           errorMsg={formik.errors.phone}
         />
-        {/* <Input
-          id="birthplace-input"
-          name="birthplace"
-          logo={userLogo}
-          colorScheme="grey"
-          placeholder="Tempat Lahir"
-          value={formik.values.birthplace}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.birthplace !== undefined && formik.touched.birthplace
-          }
-          errorMsg={formik.errors.birthplace}
-        />
-        <DatePicker
-          id="birth-date"
-          name="birthdate"
-          format="DD-MM-YYYY"
-          outputFormat="YYYY-MM-DD"
-          logo={calendarLogo}
-          colorScheme="grey"
-          placeholder="Tanggal Lahir"
-          value={formik.values.birthdate}
-          onChange={(event, date) => {
-            formik.setFieldValue('birthdate', date);
-          }}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.birthdate !== undefined && formik.touched.birthdate
-          }
-          errorMsg={formik.errors.birthdate}
-        /> */}
+
         <Input
           id="mother-input"
           name="mother"
