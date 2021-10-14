@@ -50,8 +50,8 @@ export function FormRegister() {
         Nik: values.ktp,
         PhoneNumber: parseInt(values.phone),
         Email: values.email,
-        BirthPlace: values.birthplace,
-        BirthDate: values.birthdate,
+        BirthPlace: 'Tes',
+        BirthDate: '2020-02-21',
         MotherName: values.mother,
         Password: values.password,
         BankAccount: 32432423,
@@ -79,8 +79,7 @@ export function FormRegister() {
       ktp: '',
       phone: '',
       mother: '',
-      birthplace: '',
-      birthdate: '',
+
       password: '',
       confirmPassword: '',
     },
@@ -148,7 +147,7 @@ export function FormRegister() {
           error={formik.errors.phone !== undefined && formik.touched.phone}
           errorMsg={formik.errors.phone}
         />
-        <Input
+        {/* <Input
           id="birthplace-input"
           name="birthplace"
           logo={userLogo}
@@ -179,7 +178,7 @@ export function FormRegister() {
             formik.errors.birthdate !== undefined && formik.touched.birthdate
           }
           errorMsg={formik.errors.birthdate}
-        />
+        /> */}
         <Input
           id="mother-input"
           name="mother"
