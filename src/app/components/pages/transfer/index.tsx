@@ -11,7 +11,7 @@ import Select from 'app/components/atoms/select-bottom-sheet/loadable';
 import SuccessLogo from 'assets/img/success.png';
 import { rpMasking } from 'utils/number';
 import Styles from './styles';
-
+import Input from 'app/components/atoms/input/loadable';
 import { getToken } from 'utils/cookie';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { transfer } from 'services/transfer';
@@ -24,6 +24,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const loginSchema = Yup.object().shape({
   nominal: Yup.string().required('Nominal tidak boleh kosong'),
+  nomorTujuan: Yup.string().required('Nomor Tujuan tidak boleh kosong'),
+  nama: Yup.string().required('Nama tidak boleh kosong'),
+  fundSource: Yup.string().required('Tujuan Penarikan tidak boleh kosong'),
 });
 
 const withdrawOptions = [
@@ -128,6 +131,8 @@ export function PageTransfer() {
         IdUser: dataJwt['wallet_id'],
         PhoneNumber: dataUser['PhoneNumber'],
         UserMerchantId: values.fundSource,
+        Name: values.nama,
+        NomorTujuan: values.nomorTujuan,
       });
 
       setDataRes(dataResTemp);
@@ -170,6 +175,8 @@ export function PageTransfer() {
   const formik = useFormik({
     initialValues: {
       nominal: '',
+      nomorTujuan: '',
+      nama: '',
       fundSource: '',
     },
     validationSchema: loginSchema,
@@ -231,6 +238,48 @@ export function PageTransfer() {
                   </span>
                 </div>
                 <form onSubmit={formik.handleSubmit}>
+                  <Select
+                    id="saving-fund-source"
+                    name="fundSource"
+                    label="Sumber Dana"
+                    options={options}
+                    value={formik.values.fundSource}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.fundSource !== undefined &&
+                      formik.touched.fundSource
+                    }
+                    errorMsg={formik.errors.fundSource}
+                  />
+                  <InputNumber
+                    id="withdraw-nominal"
+                    name="nomorTujuan"
+                    masking="none"
+                    label="Nomor Tujuan"
+                    placeholder="Nomor Tujuan"
+                    value={formik.values.nomorTujuan}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.nomorTujuan !== undefined &&
+                      formik.touched.nomorTujuan
+                    }
+                    errorMsg={formik.errors.nomorTujuan}
+                  />
+                  <Input
+                    id="name-input"
+                    name="nama"
+                    placeholder="Nama"
+                    label="Nama"
+                    value={formik.values.nama}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.nama !== undefined && formik.touched.nama
+                    }
+                    errorMsg={formik.errors.nama}
+                  />
                   <InputNumber
                     id="withdraw-nominal"
                     name="nominal"
@@ -246,22 +295,8 @@ export function PageTransfer() {
                     }
                     errorMsg={formik.errors.nominal}
                   />
-                  <Select
-                    id="saving-fund-source"
-                    name="fundSource"
-                    label="Sumber Dana"
-                    options={options}
-                    value={formik.values.fundSource}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.errors.fundSource !== undefined &&
-                      formik.touched.fundSource
-                    }
-                    errorMsg={formik.errors.fundSource}
-                  />
 
-                  <div className="flex flex-h-space flex-wrap">
+                  {/* <div className="flex flex-h-space flex-wrap">
                     {withdrawOptions.map(opt => (
                       <div
                         onClick={() => pilihNominal(opt.label)}
@@ -271,7 +306,7 @@ export function PageTransfer() {
                         {rpMasking(opt.label)}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   <div>
                     <span className="text-info">
@@ -304,6 +339,48 @@ export function PageTransfer() {
                       Detail Transaksi
                     </span>
                   </div>
+                  <Select
+                    id="saving-fund-source"
+                    name="fundSource"
+                    label="Sumber Dana"
+                    options={options}
+                    value={formik.values.fundSource}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.fundSource !== undefined &&
+                      formik.touched.fundSource
+                    }
+                    errorMsg={formik.errors.fundSource}
+                  />
+                  <InputNumber
+                    id="withdraw-nominal"
+                    name="nomorTujuan"
+                    masking="none"
+                    label="Nomor Tujuan"
+                    placeholder="Nomor Tujuan"
+                    value={formik.values.nomorTujuan}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.nomorTujuan !== undefined &&
+                      formik.touched.nomorTujuan
+                    }
+                    errorMsg={formik.errors.nomorTujuan}
+                  />
+                  <Input
+                    id="name-input"
+                    name="nama"
+                    placeholder="Nama"
+                    label="Nama"
+                    value={formik.values.nama}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.errors.nama !== undefined && formik.touched.nama
+                    }
+                    errorMsg={formik.errors.nama}
+                  />
                   <InputNumber
                     id="withdraw-nominal"
                     name="nominal"
@@ -318,20 +395,6 @@ export function PageTransfer() {
                       formik.touched.nominal
                     }
                     errorMsg={formik.errors.nominal}
-                  />
-                  <Select
-                    id="saving-fund-source"
-                    name="fundSource"
-                    label="Sumber Dana"
-                    options={options}
-                    value={formik.values.fundSource}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.errors.fundSource !== undefined &&
-                      formik.touched.fundSource
-                    }
-                    errorMsg={formik.errors.fundSource}
                   />
 
                   <div className="text-info pb-1 main-border-bottom">

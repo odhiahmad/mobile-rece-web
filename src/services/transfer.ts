@@ -5,6 +5,8 @@ export interface ICreateUser {
   IdUser: string;
   UserMerchantId: string;
   PhoneNumber: number;
+  Name: string;
+  NomorTujuan: number;
 }
 
 export const transfer = async (payload: ICreateUser) => {
