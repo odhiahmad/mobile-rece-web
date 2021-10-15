@@ -8,6 +8,8 @@ import userLogo from 'assets/img/login/user.png';
 import lockLogo from 'assets/img/login/lock.png';
 import { login as loginService } from 'services/auth';
 import { setToken } from 'utils/cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required('Username tidak boleh kosong'),
@@ -24,11 +26,22 @@ export function FormLogin() {
         username: values.username,
         password: values.password,
       });
-      // console.log(response);
-      // const { data } = response;
-      setToken(response.Data);
-      console.log(response.Data);
-      window.location.reload();
+
+      if (response.errorId === 404) {
+        toast.error('Email atau Password Anda Salah', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        const { data } = response;
+        setToken(response.Data);
+        window.location.reload();
+      }
       setLoading(false);
     } catch (error) {
       // [NOTE] DELETE WHEN FULLY INTEGRATE WITH API, FOR TESTING PURPOSE ONLY
@@ -50,6 +63,17 @@ export function FormLogin() {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="mb-3">
         <Input
           id="username-input"

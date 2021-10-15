@@ -58,19 +58,16 @@ export function FormRegister() {
         BankAccount: 32432423,
       });
 
-      if (response.status === 201) {
-        toast.error(
-          'Email sudah pernah digunakan, silahkan gunakan email lain',
-          {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          },
-        );
+      if (response.errorId === 409) {
+        toast.error('Email atau NIK atau Nomor HP sudah pernah digunakan', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         history.push({
           pathname: '/otp',
@@ -112,7 +109,6 @@ export function FormRegister() {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
-      {}
       <ToastContainer
         position="top-center"
         autoClose={5000}
