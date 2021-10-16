@@ -26,7 +26,7 @@ const loginSchema = Yup.object().shape({
 const options = [
   {
     label: 'Dana',
-    value: '5715a88c-82ee-4f95-8e70-5434a2ee2bb1 ',
+    value: '5715a88c-82ee-4f95-8e70-5434a2ee2bb1',
   },
   {
     label: 'Gopay',
