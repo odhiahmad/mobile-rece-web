@@ -80,7 +80,7 @@ export function FormLogin() {
           name="username"
           logo={userLogo}
           colorScheme="grey"
-          placeholder="Username"
+          placeholder="Email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
