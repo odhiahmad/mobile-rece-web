@@ -241,7 +241,7 @@ export function PageTransfer() {
                   <Select
                     id="saving-fund-source"
                     name="fundSource"
-                    label="Sumber Dana"
+                    label="Transfer Ke Mana?"
                     options={options}
                     value={formik.values.fundSource}
                     onChange={formik.handleChange}
@@ -284,8 +284,8 @@ export function PageTransfer() {
                     id="withdraw-nominal"
                     name="nominal"
                     masking="none"
-                    label="Nominal"
-                    placeholder="Nominal"
+                    label="Jumlah Transfer"
+                    placeholder="Jumlah Transfer"
                     value={formik.values.nominal}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -399,12 +399,12 @@ export function PageTransfer() {
 
                   <div className="text-info pb-1 main-border-bottom">
                     <div className="flex flex-v-center flex-h-space pt-half pb-half">
-                      <span>Jumlah Nabung</span>
+                      <span>Jumlah Transfer</span>
                       <span>{rpMasking(formik.values.nominal)}</span>
                     </div>
                     <div className="flex flex-v-center flex-h-space pt-half pb-half">
                       <span>Biaya Admin</span>
-                      <span>Rp 2.500</span>
+                      <span>Rp 0</span>
                     </div>
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
@@ -477,17 +477,17 @@ export function PageTransfer() {
                 </div>
                 <div className="text-info pb-1 main-border-bottom">
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
-                    <span>Jumlah Nabung</span>
+                    <span>Jumlah Transfer</span>
                     <span>{rpMasking(formik.values.nominal)}</span>
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Biaya Admin</span>
-                    <span>Rp0</span>
+                    <span>Rp 0</span>
                   </div>
                 </div>
                 <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
                   <span>Total</span>
-                  <span>{rpMasking(formik.values.nominal)}</span>
+                  <span>{rpMasking(dataRes['Data']['Total'])}</span>
                 </div>
               </div>
 

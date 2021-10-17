@@ -90,6 +90,8 @@ export function PageWithdraw() {
   const [dataRes, setDataRes] = React.useState([]);
   const [dataUser, setDataUser] = React.useState([]);
   const [loadingSkel, setLoadingSkel] = React.useState(false);
+
+  const [dataSukses, setDataSukses] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
   const [errorMessage, setErrorMessage] = React.useState('');
   React.useEffect(() => {
@@ -301,7 +303,7 @@ export function PageWithdraw() {
 
                   <div className="text-info pb-1 main-border-bottom">
                     <div className="flex flex-v-center flex-h-space pt-half pb-half">
-                      <span>Jumlah Nabung</span>
+                      <span>Jumlah Tarik</span>
                       <span>{rpMasking(formik.values.nominal)}</span>
                     </div>
                     <div className="flex flex-v-center flex-h-space pt-half pb-half">
@@ -379,17 +381,17 @@ export function PageWithdraw() {
                 </div>
                 <div className="text-info pb-1 main-border-bottom">
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
-                    <span>Jumlah Nabung</span>
+                    <span>Jumlah Tarik</span>
                     <span>{rpMasking(formik.values.nominal)}</span>
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-half pb-half">
                     <span>Biaya Admin</span>
-                    <span>Rp0</span>
+                    <span>Rp 2500</span>
                   </div>
                 </div>
                 <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
                   <span>Total</span>
-                  <span>{rpMasking(formik.values.nominal)}</span>
+                  <span>{rpMasking(dataRes['Data']['Total'])}</span>
                 </div>
               </div>
 

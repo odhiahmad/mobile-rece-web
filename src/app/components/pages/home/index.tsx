@@ -202,10 +202,10 @@ export function PageHome() {
                   <div className="flex flex-v-center flex-h-space pt-1-half pb-1-half main-border-bottom">
                     <div className="flex-column">
                       <span className="text-info text-bold">
-                        {opt['TypeTransaction']} RECE
+                        {opt['TypeTransaction']}
                       </span>
                       <span className="text-info-small text-thin">
-                        Melalui Tokopedia
+                        Melalui {opt['MerchantName']}
                       </span>
                     </div>
                     <div className="flex-column">
@@ -213,9 +213,7 @@ export function PageHome() {
                         {rpMasking(opt['Amount'])}
                       </span>
                       <span className="text-info-small text-thin text-end">
-                        {moment(opt['TransactionDate'])
-                          .startOf('day')
-                          .fromNow()}
+                        {moment(opt['CreatedAt']).startOf('day').fromNow()}
                       </span>
                     </div>
                   </div>

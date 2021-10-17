@@ -209,6 +209,7 @@ export function PageSaving() {
                     id="saving-nominal"
                     name="nominal"
                     label="Nominal"
+                    masking="none"
                     colorScheme="grey"
                     placeholder="Nominal"
                     value={formik.values.nominal}
