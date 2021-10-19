@@ -60,25 +60,6 @@ const withdrawOptions = [
   },
 ];
 
-const options = [
-  {
-    label: 'Dana',
-    value: 'c5f0978f-cf06-4aa9-940e-837e7d5eb1cc',
-  },
-  {
-    label: 'Gopay',
-    value: '78727daf-876c-4fee-a758-e96dacff5307',
-  },
-  {
-    label: 'Link Aja',
-    value: 'f9109271-c0c9-47bd-98a5-ba8d02f9c54a',
-  },
-  {
-    label: 'Alfamart',
-    value: 'db92eb1b-6304-4a91-b1f4-4522815145ce',
-  },
-];
-
 export function PageWithdraw() {
   const body = document.body;
   body.style.backgroundColor = colors.black20;

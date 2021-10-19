@@ -38,7 +38,7 @@ const options = [
   },
   {
     label: 'Alfamart',
-    value: 'db92eb1b-6304-4a91-b1f4-4522815145ce',
+    value: '0640a756-c6e9-4458-9c21-64590f1c2ebd',
   },
   {
     label: 'Ovo',

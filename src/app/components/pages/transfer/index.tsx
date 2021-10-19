@@ -79,7 +79,7 @@ const options = [
   },
   {
     label: 'Alfamart',
-    value: 'db92eb1b-6304-4a91-b1f4-4522815145ce',
+    value: '0640a756-c6e9-4458-9c21-64590f1c2ebd',
   },
   {
     label: 'Ovo',
@@ -314,7 +314,7 @@ export function PageTransfer() {
                       <span className="text-thin">
                         anda akan dikenakan biaya admin sebesar{' '}
                       </span>
-                      <span className="text-heavy color-main">Rp 2.500</span>
+                      <span className="text-heavy color-main">Rp 0</span>
                     </span>
                   </div>
                   <div className="mt-2 pb-2">
@@ -409,9 +409,7 @@ export function PageTransfer() {
                   </div>
                   <div className="flex flex-v-center flex-h-space pt-2 pb-half text-bold">
                     <span>Total</span>
-                    <span>
-                      {rpMasking(parseInt(formik.values.nominal) + 2500)}
-                    </span>
+                    <span>{rpMasking(parseInt(formik.values.nominal))}</span>
                   </div>
                 </div>
                 <div className="withdraw_agreement-card flex bg-color-white100 mb-1 pt-1-half pb-1-half pl-1-half pr-1-half">
